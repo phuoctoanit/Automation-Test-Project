@@ -6,9 +6,9 @@ export default defineConfig({
   retries: 0,
   use: {
     headless: true,
-    screenshot: 'on', //only-on-failure
+    screenshot: 'only-on-failure', //only-on-failure
     video: 'retain-on-failure',
-    trace: 'on', //on-first-retry
+    trace: 'on-first-retry', //on-first-retry
   },
   reporter: [['line'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
 });
