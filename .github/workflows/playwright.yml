@@ -32,6 +32,10 @@ jobs:
       - name: ▶️ Run Playwright tests
         run: npx playwright test
 
+      - name: 🐛 Debug workspace
+        if: failure()
+        run: ls -R 
+
       - name: 📤 Upload Playwright report (on failure)
         if: failure()
         uses: actions/upload-artifact@v3
