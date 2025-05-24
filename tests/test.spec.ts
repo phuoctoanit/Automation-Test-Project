@@ -5,19 +5,34 @@ import * as path from 'path';
 
 test.describe('Practice automation on form data', async () => {
 
-    test('TC 01: Validate of value Gender, Hobbies', async ({ sharedPage, pageManager }) => {
+    test('TC 01: Validate of value Gender, Hobbies, default date of birthday', async ({ sharedPage, pageManager }) => {
         await sharedPage.goto('https://demoqa.com/automation-practice-form');
         await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
         await expect(sharedPage).toHaveTitle('DEMOQA');
+        const homePage = pageManager.getHomePage();
+        // Validate default value of gender
+        const genderValues = (await homePage.getListGenderValues()).map(value => value.toLowerCase());
+        const expectedGenderValues = ['MaLe', 'female', 'Other'].map(value => value.toLowerCase());
+        expect(genderValues).toEqual(expectedGenderValues);
+
+        // Validate default value of hobbies
+        const hobbiesValues = (await homePage.getListHobbiesValues()).map(value => value.toLowerCase());
+        const expectedHobbiesValues = ['sports', 'reading', 'music'].map(value => value.toLowerCase());
+        expect(hobbiesValues).toEqual(expectedHobbiesValues);
+
+        // Validate default date of birth
+        const dateOfBirth = await homePage.dateOfBirth.getAttribute('value');
+        const currentDate = new Date();
+        const expectedDate = `${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
+        expect(dateOfBirth).toBe(expectedDate); 
     });
 
     
     test('TC 02: User can submit the form with all valid data', async ({ sharedPage, pageManager }) => {
         await sharedPage.goto('https://demoqa.com/automation-practice-form');
-        
         await expect(sharedPage).toHaveTitle('DEMOQA');
-
         const homePage = pageManager.getHomePage();
+        //can use a CSV  or JSON file to store the form data
         const formData: FormData = {
             firstName: 'Toan',
             lastName: 'Nguyen',
@@ -48,6 +63,7 @@ test.describe('Practice automation on form data', async () => {
         await expect(sharedPage).toHaveTitle('DEMOQA');
         
         const homePage = pageManager.getHomePage();
+        //can use a CSV  or JSON file to store the form data
         const formData: FormData = {
             firstName: 'Toan',
             lastName: 'Nguyen',
@@ -71,6 +87,5 @@ test.describe('Practice automation on form data', async () => {
         await homePage.inputForm(formData);
         await homePage.validateOnSuccessModal(formData);
     });
-
 });
 

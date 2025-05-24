@@ -3,10 +3,9 @@ import { expect } from "playwright/test";
 import {FormData} from '../form-data/formData';
 import * as fs from 'fs';
 import * as path from 'path';
+import { BasePage } from "./BasePage";
 
-export class HomePage {
-
-    private page: Page;
+export class HomePage extends BasePage{
 
     // Locators
     readonly firstName: Locator;
@@ -29,7 +28,7 @@ export class HomePage {
 
 
     constructor(page: Page){
-        this.page = page;
+        super(page);
 
         this.firstName = page.locator('#firstName');
         this.lastName = page.locator('#lastName');
@@ -66,7 +65,6 @@ export class HomePage {
     async selectOnSuggestionList(value: string) {
         await this.subjects.fill(value);
         await this.page.waitForSelector('.subjects-auto-complete__menu', { state: 'visible', timeout: 5000});
-        
         const option = this.page.locator('.subjects-auto-complete__option', {hasText: value});
         await option.click();
     }
@@ -78,6 +76,18 @@ export class HomePage {
     async selectHobby(hobby: string) {
         const checkbox = this.page.locator(`//label[starts-with(@for, 'hobbies-checkbox-')][contains(text(), '${hobby}')]/parent::div`);
         await checkbox.click();
+    }
+
+    /**
+     * 
+     * @returns list of value of gender
+     */
+    async getListGenderValues(): Promise<string[]> {
+        return super.getGroupValuesOfRadio('gender');
+    }
+
+    async getListHobbiesValues(): Promise<string[]> {
+        return super.getGroupValuesOfCheckbox('#hobbiesWrapper', 'custom-control-label');
     }
 
     /**
@@ -127,7 +137,7 @@ export class HomePage {
             await this.selectHobby(hobbi);
         }
 
-        //Upload pick
+        //Upload picture
         if(formData.picture !== '') {
             await this.uploadPicture.setInputFiles(formData.picture);
         }
