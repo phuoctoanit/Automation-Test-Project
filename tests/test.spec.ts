@@ -7,10 +7,15 @@ test.describe('Practice automation on form data', async () => {
 
     test('TC 01: Validate of value Gender, Hobbies', async ({ sharedPage, pageManager }) => {
         await sharedPage.goto('https://demoqa.com/automation-practice-form');
+        await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
         await expect(sharedPage).toHaveTitle('DEMOQA');
     });
 
+    
     test('TC 02: User can submit the form with all valid data', async ({ sharedPage, pageManager }) => {
+        await sharedPage.goto('https://demoqa.com/automation-practice-form');
+        
+        await expect(sharedPage).toHaveTitle('DEMOQA');
 
         const homePage = pageManager.getHomePage();
         const formData: FormData = {
@@ -27,8 +32,38 @@ test.describe('Practice automation on form data', async () => {
             state: 'NCR',
             city: 'Delhi'
         }
+
+        if (formData.picture !== undefined && formData.picture !== '') {
+            const filePath = path.resolve(__dirname, formData.picture);
+            expect(fs.existsSync(filePath)).toBe(true);
+            formData.picture = filePath;
+        }
+        await homePage.inputForm(formData);
+        await homePage.validateOnSuccessModal(formData);
+    });
+
+    test('TC 03: User can submit the form with if input required filed only', async ({ sharedPage, pageManager }) => {
+        await sharedPage.goto('https://demoqa.com/automation-practice-form');
+        await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+        await expect(sharedPage).toHaveTitle('DEMOQA');
+        
+        const homePage = pageManager.getHomePage();
+        const formData: FormData = {
+            firstName: 'Toan',
+            lastName: 'Nguyen',
+            email: '',
+            gender: 'Male',
+            userNumber: '0704490831',
+            dateOfBirth: '',
+            subjects: [],
+            hobbies: [],
+            picture: '',
+            currentAddress: '',
+            state: '',
+            city: ''
+        }
     
-        if(formData.picture !== '') {
+        if(formData.picture !== undefined && formData.picture !== '') {
             const filePath = path.resolve(__dirname, formData.picture);
             expect(fs.existsSync(filePath)).toBe(true);
             formData.picture = filePath;

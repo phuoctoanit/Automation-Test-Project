@@ -86,6 +86,9 @@ export class HomePage {
      * @param value 
      */
     async selectOnDropdow(dropdown: Locator, value: string) {
+        if(value.trim() === '') {
+            return; // If value is empty, do not select anything
+        }
         await dropdown.click();
         const option = this.page.locator(`//div[starts-with(@id, "react-select-")][text()="${value}"]`);
         await option.click();
@@ -96,13 +99,22 @@ export class HomePage {
      * @param formData 
      */
     async inputForm(formData: FormData) {
+        // fill first name
         await this.firstName.fill(formData.firstName);
+        // fill last name
         await this.lastName.fill(formData.lastName);
+        // fill email
         await this.email.fill(formData.email);
+        //select gender
         await this.selectGender(formData.gender).click();
+        // fill user number
         await this.userNumber.fill(formData.userNumber);
-        await this.dateOfBirth.fill(formData.dateOfBirth);
-
+        // fill date of birth
+        // The date format is 'dd MMM yyyy', e.g. '25 Feb 1990'
+        // If the dateOfBirth is empty, it will not fill the input
+        if(formData.dateOfBirth !== '') {
+            await this.dateOfBirth.fill(formData.dateOfBirth);
+        }
         // select subjects value
         const subjects = formData.subjects;
         for(const sub of subjects) {
@@ -154,7 +166,7 @@ export class HomePage {
 
         //Validate date of birth
         const dateOfBirth = this.successModal.locator('tr:nth-of-type(5) > td:nth-of-type(2)');
-        const date = new Date(formData.dateOfBirth);
+        const date = formData.dateOfBirth?.trim() !== '' ? new Date(formData.dateOfBirth) : new Date();
         const day = date.getDate();
         const month = date.toLocaleString('en-US', { month: 'long' });
         const year = date.getFullYear();
@@ -170,10 +182,13 @@ export class HomePage {
 
         //Validate the picture
         const image = this.successModal.locator('tr:nth-of-type(8) > td:nth-of-type(2)');
-        const filePath = path.resolve(__dirname, formData.picture);
-        expect(fs.existsSync(filePath)).toBe(true);
-        const fileName = path.basename(filePath);
-        await expect(image).toHaveText(fileName);
+        if(!formData.picture || formData.picture.trim() === '') {
+            await expect(image).toHaveText('');
+        }else {
+            const filePath = path.resolve(__dirname, formData.picture);
+            const fileName = path.basename(filePath);
+            await expect(image).toHaveText(fileName);
+        }
 
         //Validate the address
         const address = this.successModal.locator('tr:nth-of-type(9) > td:nth-of-type(2)');
@@ -181,17 +196,19 @@ export class HomePage {
 
         //Validate the state and city
         const stateAndCity = this.successModal.locator('tr:nth-of-type(10) > td:nth-of-type(2)');
-        await expect(stateAndCity).toHaveText(formData.state + ' ' + formData.city);
+        const expectedLocation = `${formData.state ?? ''} ${formData.city ?? ''}`.trim();
+        await expect(stateAndCity).toHaveText(expectedLocation);
 
         //close modal and expect modal hidden
+        await this.closeModalBtn.scrollIntoViewIfNeeded();
+
         try{
             await this.closeModalBtn.click({ timeout: 3000 });
         }catch (e) {
-
-            //because there has a iframe of Google Ads intercept pointer events
-            console.warn('Retry click with force due to ad overlay');
-            await this.closeModalBtn.click({ force: true });
+            await this.page.evaluate(() => {
+                (document.querySelector('#closeLargeModal') as HTMLElement)?.click();
+            });
         }
-        await this.successModal.waitFor({state: 'visible'});
+        await this.successModal.waitFor({state: 'hidden', timeout: 5000});
     }
 }

@@ -32,7 +32,6 @@ export const test = base.extend<TestFixtures, WorkerFixtures> ({
             const browser: Browser = await browserType.launch( { headless: true });
             const context = await browser.newContext();
             const page = await context.newPage();
-
             try{
                 await use(page);
             }finally{
