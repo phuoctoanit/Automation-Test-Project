@@ -57,7 +57,7 @@ jobs:
           fi
       
       - name: 📤 Upload Playwright report
-        if: always() && steps.check_report.outputs.report_exists == 'true'
+        if: always() && ${{ steps.check_report.outputs.report_exists == 'true' }}
         uses: actions/upload-artifact@v3
         with:
           name: playwright-report
