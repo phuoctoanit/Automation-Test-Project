@@ -1,0 +1,24 @@
+{
+  "name": "automation-test-project",
+  "version": "1.0.0",
+  "description": "Automation-Test-Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phuoctoanit/Automation-Test-Project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/phuoctoanit/Automation-Test-Project/issues"
+  },
+  "homepage": "https://github.com/phuoctoanit/Automation-Test-Project#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.21"
+  }
+}

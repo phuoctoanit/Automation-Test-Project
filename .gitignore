@@ -1,0 +1,5 @@
+#Git Ignore file
+
+/node_modules
+/playwright-report
+/test-results
