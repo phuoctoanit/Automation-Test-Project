@@ -30,9 +30,10 @@ jobs:
         # Skip this step if you don’t compile TS (e.g., using ts-node or directly running with Playwright Test runner)
 
       - name: ▶️ Run Playwright tests
-        echo: "Running Playwright tests..."
-        run: npx playwright test
-        echo: "Playwright tests completed."
+        run: |
+          echo "Running Playwright tests..."
+          npx playwright test
+          echo "Playwright tests completed."
 
       - name: 🐛 Debug workspace
         if: failure()
