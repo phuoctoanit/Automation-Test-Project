@@ -34,7 +34,11 @@ jobs:
 
       - name: 🐛 Debug workspace
         if: failure()
-        run: ls -R 
+        run: ls -R
+
+      - name: 🐛 Debug Playwright report folder
+        if: failure()
+        run: ls -R playwright-report/
 
       - name: 📤 Upload Playwright report (on failure)
         if: failure()
