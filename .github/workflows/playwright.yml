@@ -43,14 +43,12 @@ jobs:
         if: always()
         run: ls -R playwright-report/
 
-      - name: 📤 Upload Playwright report (always)
+      - name: 📝 Check if Playwright report exists
         if: always()
         run: |
-          echo "Uploading Playwright report..."
+          echo "Checking for Playwright report..."
           if [ -d playwright-report ]; then
-            echo "Playwright report directory exists."
+            echo "✅ Report exists."
           else
-            echo "Playwright report directory does not exist."
+            echo "❌ Report directory not found!"
           fi
-        with:
-          if-no-files-found: warn
