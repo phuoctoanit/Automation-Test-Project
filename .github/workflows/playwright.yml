@@ -49,3 +49,4 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report
+          if-no-files-found: warn # Add fallback to avoid failure if the folder doesn't exist
