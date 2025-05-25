@@ -20,19 +20,23 @@ A comprehensive test automation using Playwright with TypeScript, implementing t
 
 #### 1. Clone the Repository
 
-<pre>
-git clone https://github.com/your-org/your-repo-name.git
+```console
+git clone https://github.com/phuoctoanit/Automation-Test-Project.git
 cd your-repo-name
-</pre>
+```
 
 #### 2. Install Dependencies
-<pre>
+
+```console
 npm install
-</pre>
+```
+
 #### 3. Install Playwright Browser
-<pre>
+
+```console
 npx playwright install
-</pre>
+```
+
 ## 3. Framework Structure
 <pre>
 ├── README.md
@@ -62,26 +66,33 @@ npx playwright install
 
 #### 1. Run All Tests
 
-<pre>
+```console
 npx playwright test
-</pre>
+```
+
 #### 2. Run Specific Test File
 
-<pre>
+```console
 npx playwright test tests/form/03 - validation.spec.ts
-</pre>
+```
+
 #### 3. Run with Tagged Tests (e.g.: @validation)
 
-<pre>npx playwright test --grep @validation
-</pre>
+```console
+npx playwright test --grep @validation
+```
 
 #### 4. Custom Environment Variables
-<pre>BROWSER=firefox npx playwright test
-</pre>
+
+```console
+BROWSER=firefox npx playwright test
+```
+
 #### 4. Open Playwright Test Runner (UI Mode)
 
-<pre>npx playwright test --ui
-</pre>
+```console
+npx playwright test --ui
+```
 
 ## 5. Test Cases Documented
 
