@@ -37,14 +37,6 @@ jobs:
           npx playwright test || true
           echo "Playwright tests completed."
 
-      - name: 🐛 Debug workspace
-        if: failure()
-        run: ls -R
-
-      - name: 🐛 Debug Playwright report folder
-        if: always()
-        run: ls -R playwright-report/
-
       - name: 📝 Check if Playwright report exists
         if: always()
         run: |
