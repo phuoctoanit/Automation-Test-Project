@@ -43,6 +43,8 @@ export class BasePage {
         return values;
     }
 
+
+
     /**
      * 
      * @param locator 
@@ -77,7 +79,7 @@ export class BasePage {
             return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
         }, {
             timeout: 3000,
-            message: 'Border color should be red for invalid input'
+            message: 'Border color should be green for valid input'
         }).toContain(this.validGreenColor); // Expect the border color to be green (valid)
     }
 
@@ -112,7 +114,7 @@ export class BasePage {
                 return await elements.nth(i).evaluate(el => window.getComputedStyle(el).getPropertyValue('color'));  
             }, {
                 timeout: 3000,
-                message: `Radio button ${i + 1} should be invalid`
+                message: `Radio button ${i + 1} should be valid`
             }).toContain(this.validGreenColor); // Expect the color to be green (valid)
         }
     }
