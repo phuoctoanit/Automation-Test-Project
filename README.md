@@ -85,7 +85,7 @@ npx playwright test tests/form/03 - validation.spec.ts
 
 ## 5. Test Cases Documented
 
-1. Using this [form](https://demoqa.com/automation-practice-form) to write some test case below:
+1. Using this [form](https://demoqa.com/automation-practice-form) to write some test cases as belows:
 
 #### 🧪 Test Case Summary
 
