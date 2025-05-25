@@ -174,14 +174,40 @@ test.describe('Practice automation on form data', async () => {
         });
     });
 
-    test('TC 06: Validate warning message if User Number is invalid', async ({ sharedPage, pageManager }) => {
-        //If submit User Number empty, expected to see warning message
-
-        //If submit User Number contains characters, expected to see warning message
-
-        //If submit User Number contains less than 10 digits, expected to see warning message
-
-        //If submit User Number contains more than 10 digits, expected to see warning message
+    test('TC 07: Validate warning message if User Number is invalid', async ({ sharedPage, pageManager }) => {
+        const homePage = pageManager.getHomePage();
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Leave User Number as blank', async () => {
+            await homePage.userNumber.fill('');
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.userNumber);
+            await homePage.userNumber.fill('0704490831'); // Fill User Number with valid data
+            await homePage.expectInputToBeValid(homePage.userNumber);
+        });
+        await test.step('3. Input characters on User Number', async () => {
+            await homePage.userNumber.fill('abc123'); // Fill User Number with characters
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.userNumber);
+            await homePage.userNumber.fill('0704490831'); // Fill User Number with valid data
+            await homePage.expectInputToBeValid(homePage.userNumber);   
+        });
+        await test.step('4. Input less than 10 digits on User Number', async () => {
+            await homePage.userNumber.fill('070449083'); // Fill User Number with less than 10 digits
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.userNumber);
+            await homePage.userNumber.fill('0704490831'); // Fill User Number with valid data
+            await homePage.expectInputToBeValid(homePage.userNumber);
+        });
+        await test.step('5. Input more than 10 digits on User Number', async () => {
+            await homePage.userNumber.fill('070449083123456'); // Fill User Number with more than 10 digits
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeValid(homePage.userNumber);
+            expect(homePage.userNumber.inputValue()).toBe('0704490831'); // Number is truncated to 10 digits
+        }); 
     });
 
     test('TC 07: Validate warning message if no Gender is selected', async ({ sharedPage, pageManager }) => {
