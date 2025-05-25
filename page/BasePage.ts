@@ -60,7 +60,7 @@ export class BasePage {
             return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
         }, {
             timeout: 3000,
-            message: 'Border color should be red for invalid input'
+            message: 'Border color should be red for required input'
         }).toContain(this.invalidRedColor); // Expect the border color to be red (invalid)
     }
 
@@ -79,7 +79,7 @@ export class BasePage {
             return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
         }, {
             timeout: 3000,
-            message: 'Border color should be green for valid input'
+            message: 'Border color should be green for no required input'
         }).toContain(this.validGreenColor); // Expect the border color to be green (valid)
     }
 
