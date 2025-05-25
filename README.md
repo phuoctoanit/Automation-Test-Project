@@ -1,8 +1,13 @@
 # Automation-Test-Project
 
 ## Instruction
-A comprehensive test automation using Playwright with TypeScript, implementating the Page Object Model pattern for web testing.
+A comprehensive test automation using Playwright with TypeScript, implementing the Page Object Model pattern for web testing.
 
 ## Table of Contents
-- [Project Structure] #
+- [Project Structure] #project-structures
+- [Installation] #installation
+- [Configuration] # configurations
+- [Running Tests] #running-tests
+
+## Project Structure
 
