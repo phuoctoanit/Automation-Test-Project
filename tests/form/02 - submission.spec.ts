@@ -23,7 +23,7 @@ test.describe('@submission Automation-Test-Project', async () => {
             city: 'Delhi'
         }
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -59,7 +59,7 @@ test.describe('@submission Automation-Test-Project', async () => {
         }
 
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });

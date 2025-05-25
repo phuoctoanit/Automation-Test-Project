@@ -1,3 +1,4 @@
+import { time } from 'console';
 import { test, expect } from '../shared.fixtures';
 
 test.describe('@default Automation-Test-Project', async () => {
@@ -5,7 +6,7 @@ test.describe('@default Automation-Test-Project', async () => {
     test('TC 01: Validate of value Gender, Hobbies, default date of birthday', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });

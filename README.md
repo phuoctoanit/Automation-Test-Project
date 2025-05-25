@@ -58,7 +58,7 @@ npx playwright install
     │   └── 03 - validations.spec.ts
     └── shared.fixtures.ts
 </pre>
-## 4. Execution
+## 4. 🧪 Execution
 
 #### 1. Run All Tests
 
@@ -85,9 +85,9 @@ npx playwright test tests/form/03 - validation.spec.ts
 
 ## 5. Test Cases Documented
 
-1. Using this [form](https://demoqa.com/automation-practice-form) to write some test cases as belows:
+Using this [form](https://demoqa.com/automation-practice-form) to write some test cases as belows:
 
-#### 🧪 Test Case Summary
+### 🧪 Test Case Summary
 
 | TC ID  | Title                              | Status   |
 |--------|------------------------------------|----------|
@@ -109,16 +109,107 @@ npx playwright test tests/form/03 - validation.spec.ts
 
 <p>The CI/CD pipeline, configured with GitHub Actions, triggers on every push to the main branch.</p>
 
-<p>GitHub workflow file: .github/workflows/playwright.yml
-</p>
+<p>GitHub workflow file: .github/workflows/playwright.yml</p>
 
 <p>Playwright reports are generated and published via GitHub Pages.</p>
 
-## 7. Reporting
+### 📘 GitHub Actions Workflow
 
-#### 1. To open report after executing, run the following command:
+#### 🧱 Trigger the the workflow
+- On **push** to the main branch
+- On **pull** request the the main branch
+    
+```console
+on:
+    push:
+        branches: [ main ]
+    pull_request:
+        branches: [ main ]
+```
+    
 
-<pre>npx playwright show-report</pre>
+#### 🔧 Set Environment Variables
+Sets the BROWSER environment variable
+
+```console
+env:
+  BROWSER: chromium
+
+```
+
+### ✅ Job Steps Breakdown
+#### 1. ⬇️ Checkout Code
+
+```console
+- name: ⬇️ Checkout code
+  uses: actions/checkout@v3
+```
+
+#### 2. 🟢 Setup Node.js
+
+```console
+- name: 🟢 Setup Node.js
+  uses: actions/setup-node@v3
+  with:
+    node-version: 20
+```
+
+#### 3. 📦 Install Dependencies
+
+```console
+- name: 📦 Install dependencies
+  run: npm ci
+```
+
+#### 4. 🧱 Install Playwright Browsers
+
+```console
+- name: 🧱 Install Playwright browsers
+  run: npx playwright install --with-deps
+```
+
+#### 5. ▶️ Run Playwright Tests
+
+```console
+- name: ▶️ Run Playwright tests
+  run: |
+    echo "Running Playwright tests..."
+    npx playwright test || true
+    echo "Playwright tests completed."
+```
+
+#### 6. 📝 Check if Report Exists
+
+```console
+- name: 📝 Check if Playwright report exists
+  if: always()
+  run: |
+    echo "Checking for Playwright report..."
+    if [ -d playwright-report ]; then
+      echo "✅ Report exists."
+    else
+      echo "❌ Report directory not found!"
+    fi
+```
+#### 7. 📤 Upload Test Report
+
+```console
+- name: 📤 Upload Playwright report
+  if: always()
+  uses: actions/upload-artifact@v4
+  with:
+    name: playwright-report
+    path: playwright-report
+    if-no-files-found: warn
+```
+
+## 7. 🧾 Reporting
+
+#### 1. After a test run, view the report using:
+
+```console
+npx playwright show-report
+```
 
 #### 2. On Github Action, download the lasted running.
 ![alt text](image.png)

@@ -6,7 +6,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         //If submit First Name empty, expected to see warning message
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -31,7 +31,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 05: Validate warning message if Last Name empty or contains specific characters', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -55,7 +55,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 06: Validate warning message if Email is invalid', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -77,7 +77,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 07: Validate warning message if User Number is invalid', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -115,7 +115,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 08: Validate warning message if no Gender is selected', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -132,7 +132,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         //if submit no Hobbies is selected, expected to see warning message
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -147,7 +147,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         //if submit no Subjects is selected, expected to no see warning message, because field Subjects is not required
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -163,7 +163,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 11: User can select and deselect a subject', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -184,7 +184,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 12: Validate no warning message if Current Address is empty', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
@@ -200,7 +200,7 @@ test.describe('@validation Automation-Test-Project', async () => {
     test('TC 13: Validate warning message if form data is empty', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(sharedPage).toHaveTitle('DEMOQA');
         });
