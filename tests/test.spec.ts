@@ -206,7 +206,7 @@ test.describe('Practice automation on form data', async () => {
             await homePage.userNumber.fill('070449083123456'); // Fill User Number with more than 10 digits
             await homePage.submitButton.click();
             await homePage.expectInputToBeValid(homePage.userNumber);
-            expect(homePage.userNumber.inputValue()).toBe('0704490831'); // Number is truncated to 10 digits
+            expect(await homePage.userNumber.inputValue()).toBe('0704490831'); // Number is truncated to 10 digits
         }); 
     });
 
