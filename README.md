@@ -20,26 +20,62 @@ A comprehensive test automation using Playwright with TypeScript, implementing t
 
 #### 1. Clone the Repository
 
-```console
+<pre>
 git clone https://github.com/your-org/your-repo-name.git
 cd your-repo-name
-```
+</pre>
 
 #### 2. Install Dependencies
 
-```console
+<pre>
 npm install
-```
+</pre>
 #### 3. Install Playwright Browser
 
-```console
+<pre>
 npx playwright install
-```
+</pre>
 ## 3. Framework Structure
-
+<pre>
+├── README.md
+├── constants
+│   └── Color.ts #include constants or Enum values
+├── form-data
+│   └── formData.ts #define form data
+├── package-lock.json
+├── package.json
+├── page #contains the page objects for each page
+│   ├── BasePage.ts
+│   ├── HomePage.ts
+│   └── PageManager.ts
+├── playwright-report
+├── playwright.config.ts # contains the playwright configuration
+├── resources
+│   └── cat.jpeg
+├── test-results
+└── tests
+    ├── form
+    │   ├── 01 - default-value.spec.ts
+    │   ├── 02 - submission.spec.ts
+    │   └── 03 - validations.spec.ts
+    └── shared.fixtures.ts
+</pre>
 ## 4. Execution
 
-## 5. CI/CD Intergration Guideline
+#### 1. Run All Tests
 
-## 6. Reporting
+#### 2. Run Specific Test File
+
+#### 3. Run with Tagged Tests (e.g.: @validation)
+
+#### 4. Custom Environment Variables
+
+#### 4. Open Playwright Test Runner (UI Mode)
+
+
+## 5. Test Cases Documented
+
+## 6. CI/CD Intergration Guideline
+
+## 7. Reporting
 
