@@ -7,6 +7,8 @@ import { BasePage } from "./BasePage";
 
 export class HomePage extends BasePage{
 
+    readonly radioRenderName: string = 'gender';
+
     // Locators
     readonly firstName: Locator;
     readonly lastName: Locator;
@@ -33,7 +35,7 @@ export class HomePage extends BasePage{
         this.firstName = page.locator('#firstName');
         this.lastName = page.locator('#lastName');
         this.email = page.locator('#userEmail');
-        this.gender = page.locator('[name="gender"]')
+        this.gender = page.locator(`[name="${this.radioRenderName}"]`);
         this.userNumber = page.locator('#userNumber');
         this.dateOfBirth = page.locator('#dateOfBirthInput');
         this.subjects = page.locator("#subjectsInput");
@@ -148,45 +150,6 @@ export class HomePage extends BasePage{
 
         //submit button
         await this.submitButton.click();
-    }
-
-    /**
-     * 
-     * @param locator 
-     * @param errorMessage 
-     */
-    async expectInputToBeInvalid(locator: Locator) {
-        const parentHasValidated = await this.page.locator('form').getAttribute('class');
-        expect(parentHasValidated).toContain('was-validated');
-
-        const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
-        expect(hasInvalid).toBe(true);
-
-        await expect.poll(async () => {
-            return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
-        }, {
-            timeout: 3000,
-            message: 'Border color should be red for invalid input'
-        }).toContain('rgb(220, 53, 69)'); // Expect the border color to be red (invalid)
-    }
-
-    /**
-     * 
-     * @param locator 
-     */
-    async expectInputToBeValid(locator: Locator) {
-        const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
-        expect(hasInvalid).toBe(false);
-
-        const valid = await locator.evaluate(el => el.matches(':valid'));
-        expect(valid).toBe(true);
-
-        await expect.poll(async () => {
-            return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
-        }, {
-            timeout: 3000,
-            message: 'Border color should be red for invalid input'
-        }).toContain('rgb(40, 167, 69)'); // Expect the border color to be green (valid)
     }
 
     /**

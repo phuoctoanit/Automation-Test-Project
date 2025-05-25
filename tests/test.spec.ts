@@ -210,8 +210,19 @@ test.describe('Practice automation on form data', async () => {
         }); 
     });
 
-    test('TC 07: Validate warning message if no Gender is selected', async ({ sharedPage, pageManager }) => {
-        //if submit no Gender is selected, expected to see warning message
+    test('TC 08: Validate warning message if no Gender is selected', async ({ sharedPage, pageManager }) => {
+        const homePage = pageManager.getHomePage();
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. if user submit form without selected gender', async() => {
+            await homePage.submitButton.click();
+            await homePage.expectGroupRadioToBeInValid(homePage.radioRenderName);
+            await homePage.selectOptionFromGroupRadio(homePage.radioRenderName, 'Male');
+            await homePage.expectGroupRadioToBeValid(homePage.radioRenderName);
+        });
     });
 
     test('TC 08: Validate warning message if no Hobbies is selected', async ({ sharedPage, pageManager }) => {
