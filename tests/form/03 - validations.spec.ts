@@ -1,6 +1,6 @@
 import { test, expect } from '../shared.fixtures';
 
-test.describe('Automation-Test-Project', async () => {
+test.describe('@validation Automation-Test-Project', async () => {
 
     test('TC 04: Validate warning message if First Name empty or contains specific characters', async ({ sharedPage, pageManager }) => {
         //If submit First Name empty, expected to see warning message
