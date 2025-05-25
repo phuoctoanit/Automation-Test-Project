@@ -8,7 +8,7 @@ export default defineConfig({
     headless: true,
     screenshot: 'only-on-failure', //only-on-failure
     video: 'retain-on-failure',
-    trace: 'on-first-retry', //on-first-retry
+    trace: process.env.CI ? 'off' : 'on-first-retry'
   },
   reporter: [['line'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
 });
