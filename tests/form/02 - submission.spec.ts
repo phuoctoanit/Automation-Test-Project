@@ -3,7 +3,7 @@ import {FormData} from '../../form-data/formData';
 import * as fs from 'fs';
 import * as path from 'path';
 
-test.describe('Practice automation on form data', async () => {
+test.describe('Automation-Test-Project', async () => {
     
     test('TC 02: User can submit the form with all valid data', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();

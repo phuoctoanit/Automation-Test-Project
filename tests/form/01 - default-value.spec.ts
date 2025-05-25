@@ -1,6 +1,6 @@
 import { test, expect } from '../shared.fixtures';
 
-test.describe('Practice automation on form data', async () => {
+test.describe('Automation-Test-Project', async () => {
 
     test('TC 01: Validate of value Gender, Hobbies, default date of birthday', async ({ sharedPage, pageManager }) => {
         const homePage = pageManager.getHomePage();
