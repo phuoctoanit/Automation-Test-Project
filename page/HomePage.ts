@@ -4,6 +4,7 @@ import {FormData} from '../form-data/formData';
 import * as fs from 'fs';
 import * as path from 'path';
 import { BasePage } from "./BasePage";
+import { Color } from "../constants/Color";
 
 export class HomePage extends BasePage{
 
@@ -57,7 +58,7 @@ export class HomePage extends BasePage{
      * @returns 
      */
     async selectGender(genderValue: string) {
-        await this.page.locator(`//input[@name="${this.radioRenderName}"][@value="${genderValue}"]/parent::div`).click();
+        await this.page.locator(`//input[@name="${this.radioRenderName}"][@value="${genderValue}"]/following-sibling::label`).click();
     }
 
     /**
@@ -134,7 +135,7 @@ export class HomePage extends BasePage{
             }, {
                 timeout: 3000,
                 message: `Checkbox ${i + 1} should be valid`
-            }).toContain(this.validGreenColor); // Expect the border color to be green (valid)
+            }).toContain(Color.Green); // Expect the border color to be green (valid)
         }   
     }
 
@@ -159,12 +160,13 @@ export class HomePage extends BasePage{
      * @param dropdown 
      * @param value 
      */
-    async selectOnDropdow(dropdown: Locator, value: string) {
+    async selectOnDropdown(dropdown: Locator, value: string) {
         if(value.trim() === '') {
             return; // If value is empty, do not select anything
         }
         await dropdown.click();
         const option = this.page.locator(`//div[starts-with(@id, "react-select-")][text()="${value}"]`);
+        await expect(option).toBeVisible();
         await option.click();
     }
 
@@ -207,8 +209,8 @@ export class HomePage extends BasePage{
         }
 
         await this.currentAddress.fill(formData.currentAddress);
-        await this.selectOnDropdow(this.state, formData.state);
-        await this.selectOnDropdow(this.city, formData.city);
+        await this.selectOnDropdown(this.state, formData.state);
+        await this.selectOnDropdown(this.city, formData.city);
 
         //submit button
         await this.submitButton.click();

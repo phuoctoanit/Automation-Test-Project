@@ -1,10 +1,9 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { Color } from "../constants/Color";
 
 export class BasePage {
 
     protected page: Page;
-    protected readonly invalidRedColor: string = 'rgb(220, 53, 69)'; // Invalid color (red)
-    protected readonly validGreenColor: string = 'rgb(40, 167, 69)'; // Valid color (green)
 
     constructor(page: Page) {
         this.page = page;
@@ -61,7 +60,7 @@ export class BasePage {
         }, {
             timeout: 3000,
             message: 'Border color should be red for required input'
-        }).toContain(this.invalidRedColor); // Expect the border color to be red (invalid)
+        }).toContain(Color.Red); // Expect the border color to be red (invalid)
     }
 
     /**
@@ -80,7 +79,7 @@ export class BasePage {
         }, {
             timeout: 3000,
             message: 'Border color should be green for no required input'
-        }).toContain(this.validGreenColor); // Expect the border color to be green (valid)
+        }).toContain(Color.Green); // Expect the border color to be green (valid)
     }
 
     /**
@@ -97,7 +96,7 @@ export class BasePage {
             }, {
                 timeout: 3000,
                 message: `Radio button ${i + 1} should be invalid`
-            }).toContain(this.invalidRedColor); // Expect the color to be red (invalid
+            }).toContain(Color.Red); // Expect the color to be red (invalid
         }
     }
 
@@ -115,7 +114,7 @@ export class BasePage {
             }, {
                 timeout: 3000,
                 message: `Radio button ${i + 1} should be valid`
-            }).toContain(this.validGreenColor); // Expect the color to be green (valid)
+            }).toContain(Color.Green); // Expect the color to be green (valid)
         }
     }
 
