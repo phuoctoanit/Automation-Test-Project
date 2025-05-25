@@ -33,7 +33,6 @@ export class BasePage {
         const containerLocator = this.page.locator(container);
         const labels = containerLocator.locator(`label.${groupName}`);
         const count = await labels.count();
-        console.debug(`Count of checkboxes in group "${groupName}": ${count}`);
         const values: string[] = [];
         for (let i = 0; i < count; i++) {
             values.push(await labels.nth(i).innerText());

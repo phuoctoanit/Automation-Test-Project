@@ -6,31 +6,32 @@ import * as path from 'path';
 test.describe('Practice automation on form data', async () => {
 
     test('TC 01: Validate of value Gender, Hobbies, default date of birthday', async ({ sharedPage, pageManager }) => {
-        await sharedPage.goto('https://demoqa.com/automation-practice-form');
-        await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
-        await expect(sharedPage).toHaveTitle('DEMOQA');
         const homePage = pageManager.getHomePage();
-        // Validate default value of gender
-        const genderValues = (await homePage.getListGenderValues()).map(value => value.toLowerCase());
-        const expectedGenderValues = ['MaLe', 'female', 'Other'].map(value => value.toLowerCase());
-        expect(genderValues).toEqual(expectedGenderValues);
-
-        // Validate default value of hobbies
-        const hobbiesValues = (await homePage.getListHobbiesValues()).map(value => value.toLowerCase());
-        const expectedHobbiesValues = ['sports', 'reading', 'music'].map(value => value.toLowerCase());
-        expect(hobbiesValues).toEqual(expectedHobbiesValues);
-
-        // Validate default date of birth
-        const dateOfBirth = await homePage.dateOfBirth.getAttribute('value');
-        const currentDate = new Date();
-        const expectedDate = `${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
-        expect(dateOfBirth).toBe(expectedDate); 
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Validate default of gender', async () => {
+            const genderValues = (await homePage.getListGenderValues()).map(value => value.toLowerCase());
+            const expectedGenderValues = ['MaLe', 'female', 'Other'].map(value => value.toLowerCase());
+            expect(genderValues).toEqual(expectedGenderValues);
+        });
+        await test.step('3. Validate default of hobbies', async () => {
+            const hobbiesValues = (await homePage.getListHobbiesValues()).map(value => value.toLowerCase());
+            const expectedHobbiesValues = ['sports', 'reading', 'music'].map(value => value.toLowerCase());
+            expect(hobbiesValues).toEqual(expectedHobbiesValues);
+        });
+        await test.step('4. Validate default date of birth', async () => {
+            const dateOfBirth = await homePage.dateOfBirth.getAttribute('value');
+            const currentDate = new Date();
+            const expectedDate = `${currentDate.getDate().toString().padStart(2, '0')} ${currentDate.toLocaleString('default', { month: 'short' })} ${currentDate.getFullYear()}`;
+            expect(dateOfBirth).toBe(expectedDate); 
+        });
     });
 
     
     test('TC 02: User can submit the form with all valid data', async ({ sharedPage, pageManager }) => {
-        await sharedPage.goto('https://demoqa.com/automation-practice-form');
-        await expect(sharedPage).toHaveTitle('DEMOQA');
         const homePage = pageManager.getHomePage();
         //can use a CSV  or JSON file to store the form data
         const formData: FormData = {
@@ -47,21 +48,25 @@ test.describe('Practice automation on form data', async () => {
             state: 'NCR',
             city: 'Delhi'
         }
-
-        if (formData.picture !== undefined && formData.picture !== '') {
-            const filePath = path.resolve(__dirname, formData.picture);
-            expect(fs.existsSync(filePath)).toBe(true);
-            formData.picture = filePath;
-        }
-        await homePage.inputForm(formData);
-        await homePage.validateOnSuccessModal(formData);
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Input all valid data into the form', async () => {
+            if (formData.picture !== undefined && formData.picture !== '') {
+                const filePath = path.resolve(__dirname, formData.picture);
+                expect(fs.existsSync(filePath)).toBe(true);
+                formData.picture = filePath;
+            }
+            await homePage.inputForm(formData);
+        });
+        await test.step('3. Validate success modal', async () => {
+            await homePage.validateOnSuccessModal(formData);
+        });
     });
 
     test('TC 03: User can submit the form with if input required filed only', async ({ sharedPage, pageManager }) => {
-        await sharedPage.goto('https://demoqa.com/automation-practice-form');
-        await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
-        await expect(sharedPage).toHaveTitle('DEMOQA');
-        
         const homePage = pageManager.getHomePage();
         //can use a CSV  or JSON file to store the form data
         const formData: FormData = {
@@ -78,14 +83,129 @@ test.describe('Practice automation on form data', async () => {
             state: '',
             city: ''
         }
-    
-        if(formData.picture !== undefined && formData.picture !== '') {
-            const filePath = path.resolve(__dirname, formData.picture);
-            expect(fs.existsSync(filePath)).toBe(true);
-            formData.picture = filePath;
-        }
-        await homePage.inputForm(formData);
-        await homePage.validateOnSuccessModal(formData);
+
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Input all valid data into the form', async () => {
+            if (formData.picture !== undefined && formData.picture !== '') {
+                const filePath = path.resolve(__dirname, formData.picture);
+                expect(fs.existsSync(filePath)).toBe(true);
+                formData.picture = filePath;
+            }
+            await homePage.inputForm(formData);
+        });
+        await test.step('3. Validate success modal', async () => {
+            await homePage.validateOnSuccessModal(formData);
+        });
     });
+
+    test('TC 04: Validate warning message if First Name empty or contains specific characters', async ({ sharedPage, pageManager }) => {
+        //If submit First Name empty, expected to see warning message
+        const homePage = pageManager.getHomePage();
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Leave First Name as blank', async () => {
+            //const homePage = pageManager.getHomePage();
+            await homePage.firstName.fill(''); // Clear First Name
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.firstName);
+            await homePage.firstName.fill('Toan'); // Fill First Name with valid data
+            await homePage.expectInputToBeValid(homePage.firstName);
+        });
+        await test.step('3. Input a space or special characters', async () => {
+            await homePage.firstName.fill('!@#$%^&*()'); // Fill First Name with special characters
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.firstName);
+            await homePage.firstName.fill(' '); // Fill First Name with a space
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.firstName);
+        }); 
+    });
+
+    test('TC 05: Validate warning message if Last Name empty or contains specific characters', async ({ sharedPage, pageManager }) => {
+        const homePage = pageManager.getHomePage();
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        await test.step('2. Leave Last Name as blank', async () => {
+            await homePage.lastName.fill('');
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.lastName);
+            await homePage.lastName.fill('Toan'); // Fill Last Name with valid data
+            await homePage.expectInputToBeValid(homePage.lastName);
+        });
+        await test.step('3. Input a space or special characters', async () => {
+            await homePage.lastName.fill('!@#$%^&*()'); // Fill First Name with special characters
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.lastName);
+            await homePage.lastName.fill(' '); // Fill Last Name with a space
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.lastName);
+        }); 
+    })
+
+    test('TC 06: Validate warning message if Email is invalid', async ({ sharedPage, pageManager }) => {
+        const homePage = pageManager.getHomePage();
+        await test.step('1. Navigate to the automation practice form page', async () => {
+            await sharedPage.goto('https://demoqa.com/automation-practice-form');
+            await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
+            await expect(sharedPage).toHaveTitle('DEMOQA');
+        });
+        //If submit Email empty, expected to no see warning message,because field Email is not required
+        await test.step('2. Leave Email as blank', async () => {
+            await homePage.email.fill('');
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeValid(homePage.email); // Email is not required, so it should be valid
+        });
+        await test.step('3. Input an invalid email format', async () => {
+            await homePage.email.fill('invalid-email'); // Fill Email with invalid format
+            await homePage.submitButton.click();
+            await homePage.expectInputToBeInvalid(homePage.email);
+            await homePage.email.fill('toanhcmus@gmail.com'); // Fill Email with valid data
+            await homePage.expectInputToBeValid(homePage.email);
+        });
+    });
+
+    test('TC 06: Validate warning message if User Number is invalid', async ({ sharedPage, pageManager }) => {
+        //If submit User Number empty, expected to see warning message
+
+        //If submit User Number contains characters, expected to see warning message
+
+        //If submit User Number contains less than 10 digits, expected to see warning message
+
+        //If submit User Number contains more than 10 digits, expected to see warning message
+    });
+
+    test('TC 07: Validate warning message if no Gender is selected', async ({ sharedPage, pageManager }) => {
+        //if submit no Gender is selected, expected to see warning message
+    });
+
+    test('TC 08: Validate warning message if no Hobbies is selected', async ({ sharedPage, pageManager }) => {
+        //if submit no Hobbies is selected, expected to see warning message
+    });
+    test('TC 09: Validate warning message if no Subjects is selected', async ({ sharedPage, pageManager }) => {
+        //if submit no Subjects is selected, expected to see warning message
+    }
+    );
+    test('TC 10: Validate warning message if no State and/or City is selected', async ({ sharedPage, pageManager }) => {
+        //if submit no State and/or City is selected, expected to see warning message
+    }
+    );
+    test('TC 11: Validate warning message if Current Address is empty', async ({ sharedPage, pageManager }) => {
+        //if submit Current Address is empty, expected to see warning message
+    });
+
+    test('TC 12: Validate warning message if form data is empty', async ({ sharedPage, pageManager }) => {
+        //if submit Date of Birth is invalid, expected to see warning message
+    });
+
 });
 

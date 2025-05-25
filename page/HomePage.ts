@@ -152,6 +152,45 @@ export class HomePage extends BasePage{
 
     /**
      * 
+     * @param locator 
+     * @param errorMessage 
+     */
+    async expectInputToBeInvalid(locator: Locator) {
+        const parentHasValidated = await this.page.locator('form').getAttribute('class');
+        expect(parentHasValidated).toContain('was-validated');
+
+        const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
+        expect(hasInvalid).toBe(true);
+
+        await expect.poll(async () => {
+            return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
+        }, {
+            timeout: 3000,
+            message: 'Border color should be red for invalid input'
+        }).toContain('rgb(220, 53, 69)'); // Expect the border color to be red (invalid)
+    }
+
+    /**
+     * 
+     * @param locator 
+     */
+    async expectInputToBeValid(locator: Locator) {
+        const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
+        expect(hasInvalid).toBe(false);
+
+        const valid = await locator.evaluate(el => el.matches(':valid'));
+        expect(valid).toBe(true);
+
+        await expect.poll(async () => {
+            return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
+        }, {
+            timeout: 3000,
+            message: 'Border color should be red for invalid input'
+        }).toContain('rgb(40, 167, 69)'); // Expect the border color to be green (valid)
+    }
+
+    /**
+     * 
      * @param formData 
      */
     async validateOnSuccessModal(formData: FormData){
