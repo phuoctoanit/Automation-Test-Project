@@ -14,7 +14,7 @@ A comprehensive test automation using Playwright with TypeScript, implementing t
 
 ## 1. Purpose of Framework
 
-  Provide a Playwright Framework for Web Application with TypeScript, implementing the Page Object Modal and integrated with CI/CD Github Action
+  Provide a Playwright Framework for Web Application with TypeScript, implementing the Page Object Model and integrated with CI/CD Github Action
 
 ## 2. Installation
 
@@ -47,11 +47,11 @@ npx playwright install
 ├── package-lock.json
 ├── package.json
 ├── page #contains the page objects for each page
-│   ├── BasePage.ts
+│   ├── BasePage.ts #parent class, includes common locator and method
 │   ├── HomePage.ts
-│   └── PageManager.ts
-├── playwright-report
-├── playwright.config.ts # contains the playwright configuration
+│   └── PageManager.ts #Page Object Model Management, init a class object
+├── playwright-report #output reporting
+├── playwright.config.ts #contains the playwright configuration
 ├── resources
 │   └── cat.jpeg
 ├── test-results
