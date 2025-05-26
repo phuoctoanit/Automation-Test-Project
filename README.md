@@ -9,7 +9,7 @@ A comprehensive test automation using Playwright with TypeScript, implementing t
 3.  [Framework Structure](#3-framework-structure)
 4.  [Execution](#4-execution)
 5.  [Test Cases Documented](#5-test-cases-documented)
-6.  [CI/CD Integration Guideline](#6-cicd-integration-guideline)
+6.  [CI/CD Integration Guideline](#6-ci/cd-integration-guideline)
 7.  [Reporting](#7-reporting)
 
 ## 1. Purpose of Framework
@@ -116,7 +116,7 @@ Using this [form](https://demoqa.com/automation-practice-form) to write some tes
 | TC012  | Validation if user leave empty value or enter a long text on Current Address   | ✅ Pass  |
 | TC013  | Validation if user submit form with all empty data   | ❌ Fail  |
 
-## 6. CI/CD Intergration Guideline
+## 6. CI/CD Integration Guideline
 
 <p>The CI/CD pipeline, configured with GitHub Actions, triggers on every push to the main branch.</p>
 
