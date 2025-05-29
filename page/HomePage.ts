@@ -243,7 +243,7 @@ export class HomePage extends BasePage{
         //Validate date of birth
         const dateOfBirth = this.successModal.locator('tr:nth-of-type(5) > td:nth-of-type(2)');
         const date = formData.dateOfBirth?.trim() !== '' ? new Date(formData.dateOfBirth) : new Date();
-        const day = date.getDate();
+        const day = String(date.getDate()).padStart(2, '0');
         const month = date.toLocaleString('en-US', { month: 'long' });
         const year = date.getFullYear();
         await expect(dateOfBirth).toHaveText(`${day} ${month},${year}`);

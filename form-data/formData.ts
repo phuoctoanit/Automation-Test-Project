@@ -11,4 +11,4 @@ export type FormData = {
     currentAddress: string;
     state: string;
     city: string;
-};
+};      

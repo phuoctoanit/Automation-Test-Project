@@ -10,5 +10,9 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: process.env.CI ? 'off' : 'on-first-retry'
   },
-  reporter: [['line'], ['html', { outputFolder: 'playwright-report', open: 'never' }]],
+  reporter: [
+    ['line'], 
+    ['html', { outputFolder: 'playwright-report', open: 'never' }],
+    ['allure-playwright']
+  ],
 });

@@ -2,12 +2,16 @@ name: Playwright Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [ features/v1, main ]
   pull_request:
-    branches: [ main ]
+    branches: [ features/v1, main ]
+
+permissions:
+  contents: write    
 
 jobs:
-  test:
+  execute:
+    name: 🧪 Run Playwright Tests
     runs-on: ubuntu-latest
     env: 
       BROWSER: chromium
@@ -27,10 +31,6 @@ jobs:
       - name: 🧱 Install Playwright browsers
         run: npx playwright install --with-deps
 
-      # - name: 🛠️ Build TypeScript (if needed)
-        # run: npm run build
-        # Skip this step if you don’t compile TS (e.g., using ts-node or directly running with Playwright Test runner)
-
       - name: ▶️ Run Playwright tests
         run: |
           echo "Running Playwright tests..."
@@ -45,7 +45,7 @@ jobs:
             echo "✅ Report exists."
           else
             echo "❌ Report directory not found!"
-          fi
+          fi  
       
       - name: 📤 Upload Playwright report
         if: always()
@@ -54,3 +54,58 @@ jobs:
           name: playwright-report
           path: playwright-report
           if-no-files-found: warn
+
+      - name: 📁 Check Allure Results
+        if: always()
+        run: |
+          echo "Checking allure-results..."
+          ls -la
+          ls -la allure-results || echo "❌ No allure-results directory"
+
+      - name: 📤 Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          if-no-files-found: warn    
+
+  publish:
+    name: 🚀 Publish Allure Report
+    needs: execute  # Waits for test job to complete
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Download Allure Results Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: 📊 Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: 🧬 Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+        
+      - name: 📦 Upload Allure Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 5
+
+      - name: ⬇️ Download Allure Report Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-report
+          path: ./allure-report
+
+      - name: 📤 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./allure-report
+          publish_branch: gh-pages         
+       
