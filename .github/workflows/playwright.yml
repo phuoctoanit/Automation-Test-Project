@@ -61,6 +61,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: ⬇️ Download Allure Results Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
       - name: 📊 Install Allure CLI
         run: npm install -g allure-commandline
 
