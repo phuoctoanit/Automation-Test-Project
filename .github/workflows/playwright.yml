@@ -67,6 +67,13 @@ jobs:
       - name: 🧬 Generate Allure Report
         run: |
           allure generate allure-results --clean -o allure-report
+        
+      - name: 📦 Upload Allure Report Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+          retention-days: 5
 
       - name: ⬇️ Download Allure Report Artifact
         uses: actions/download-artifact@v4
