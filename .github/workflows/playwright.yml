@@ -40,7 +40,6 @@ jobs:
   publish:
     name: 🚀 Publish Allure Report
     needs: execute  # Waits for test job to complete
-    if: github.ref == 'refs/heads/main'  # Only publish on main
     runs-on: ubuntu-latest
 
     steps:
