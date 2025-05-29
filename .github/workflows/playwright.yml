@@ -37,12 +37,6 @@ jobs:
           npx playwright test || true
           echo "Playwright tests completed."
 
-  publish:
-    name: 🚀 Publish Allure Report
-    needs: execute  # Waits for test job to complete
-    runs-on: ubuntu-latest
-
-    steps:
       - name: 📝 Check if Playwright report exists
         if: always()
         run: |
@@ -61,6 +55,12 @@ jobs:
           path: playwright-report
           if-no-files-found: warn
 
+  publish:
+    name: 🚀 Publish Allure Report
+    needs: execute  # Waits for test job to complete
+    runs-on: ubuntu-latest
+
+    steps:
       - name: 📊 Install Allure CLI
         run: npm install -g allure-commandline
 
