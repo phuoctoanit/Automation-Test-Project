@@ -1,6 +1,6 @@
 import { test as base, expect } from '@playwright/test'
 import { Browser, chromium, Page, firefox, webkit } from "playwright-core";
-import { PageManager } from "../page/PageManager";
+import { PageManager } from "../pages/PageManager";
 
 type WorkerFixtures = {
     sharedPage: Page
