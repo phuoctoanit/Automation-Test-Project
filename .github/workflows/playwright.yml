@@ -35,11 +35,22 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Start mock api server
-        run:  |
-          echo ${{ secrets.AUTH_TOKEN }}
-          echo ${{ secrets.USERNAME }}
-          echo ${{ secrets.PASSWORD }}
-          npx ts-node mock-apis/src/server.ts & 
+        run: |
+          if [ -z "${{ secrets.AUTH_TOKEN }}" ]; then
+            echo "AUTH_TOKEN is not defined"
+            exit 1
+          fi
+          if [ -z "${{ secrets.USERNAME }}" ]; then
+            echo "USERNAME is not defined"
+            exit 1
+          fi
+          if [ -z "${{ secrets.PASSWORD }}" ]; then
+            echo "PASSWORD is not defined"
+            exit 1
+          fi
+
+          echo "Starting mock API server..."
+          npx ts-node mock-apis/src/server.ts &
           sleep 2
 
       - name: ▶️ Run API automation testing
