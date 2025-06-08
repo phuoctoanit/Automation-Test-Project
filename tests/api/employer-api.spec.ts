@@ -1,12 +1,18 @@
-import test, { expect } from "@playwright/test";
+import test, { expect, request } from "@playwright/test";
 import { EmployerApiClient } from "../../apis/EmployerApiClient";
+import { LoginApiClient } from "../../apis/LoginApiClient";
+import { login } from "../../mock-apis/src/auth/login";
 
 
 test.describe("Employer API Tests", () => {
     let employerApiClient: EmployerApiClient;
 
     test.beforeEach(async ({ request }) => {
-        employerApiClient = new EmployerApiClient(request);
+        const loginApiClient = new LoginApiClient(request, 'http://localhost:3001');
+        const response = await loginApiClient.login('admin', 'admin');
+        expect(response.status()).toBe(200);
+        const data = await response.json();
+        employerApiClient = new EmployerApiClient(request, 'http://localhost:3001', data.token);
     });
 
     test.afterEach(async () => {

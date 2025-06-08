@@ -5,8 +5,8 @@ export class EmployerApiClient extends BaseAPIs {
 
     private readonly endpoint: string;
 
-    constructor(request: APIRequestContext, baseUrl: string = 'http://localhost:3000') {
-        super(request, baseUrl);
+    constructor(request: APIRequestContext, baseUrl: string, token?: string) {
+        super(request, baseUrl, token);
         this.endpoint = '/employers';
     }
 

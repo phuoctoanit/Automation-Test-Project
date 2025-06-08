@@ -4,15 +4,22 @@ export abstract class BaseAPIs {
 
     protected readonly request: APIRequestContext;
     protected readonly baseUrl: string; // Default base URL, can be overridden
+    protected authToken?: string;
 
     /**
      * Base class for API interactions.
      * This class can be extended to implement specific API methods.
      */
-    constructor(request: APIRequestContext, baseUrl: string = 'http://localhost:3000') {
+    constructor(request: APIRequestContext, baseUrl: string = 'http://localhost:3000', authToken?: string) {
         this.request = request;
         this.baseUrl = baseUrl;
-        // Initialization code can go here if needed
+        this.authToken = authToken;
+    }
+
+    private buildHeaders(): Record<string, string> {
+        return this.authToken
+            ? { Authorization: `Bearer ${this.authToken}` }
+            : {};
     }
 
     /**
@@ -44,7 +51,7 @@ export abstract class BaseAPIs {
         // For now, we are just returning the response from the API.
         // This method can be overridden in subclasses to provide specific functionality.
         if (params) {
-            return this.request.get(url, { params });
+            return this.request.get(url, { params, headers: this.buildHeaders() } );
         }
         // If no params are provided, just return the response from the API.
         // This is useful for endpoints that do not require query parameters.
@@ -53,7 +60,7 @@ export abstract class BaseAPIs {
         // It can be overridden in subclasses to provide specific functionality.
         // For example, subclasses can implement methods to fetch specific resources or collections.
         // This method can be used to fetch data from the API.
-        return this.request.get(url);
+        return this.request.get(url, { headers: this.buildHeaders() });
     }
 
     /**
@@ -65,7 +72,7 @@ export abstract class BaseAPIs {
      */
     protected async post<T>(endpoint: string, body: T): Promise<APIResponse> {
         const url = this.buildUrl(endpoint);
-        return this.request.post(url, { data: body });
+        return this.request.post(url, { data: body, headers: this.buildHeaders() });
     }
 
     /**
@@ -76,7 +83,7 @@ export abstract class BaseAPIs {
      */
     protected async put<T>(endpoint: string, body: T): Promise<APIResponse> {
         const url = this.buildUrl(endpoint);
-        return this.request.put(url, { data: body });
+        return this.request.put(url, { data: body, headers: this.buildHeaders() });
     }
 
     /**
@@ -86,6 +93,6 @@ export abstract class BaseAPIs {
      */
     protected async delete(endpoint: string): Promise<APIResponse> {
         const url = this.buildUrl(endpoint);
-        return this.request.delete(url);
+        return this.request.delete(url, { headers: this.buildHeaders() });
     }  
 }
