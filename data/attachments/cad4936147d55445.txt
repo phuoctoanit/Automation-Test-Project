@@ -1,2 +1,0 @@
-Finished: TC 06: Validate warning message if Email is invalid - Screenshot saved to screenshots/TC_06__Validate_warning_message_if_Email_is_invalid.png
-Test status: passed

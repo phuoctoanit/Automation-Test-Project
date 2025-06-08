@@ -1,2 +1,0 @@
-Finished: TC 03: User can submit the form with if input required filed only - Screenshot saved to screenshots/TC_03__User_can_submit_the_form_with_if_input_required_filed_only.png
-Test status: passed

@@ -1,2 +1,0 @@
-Finished: TC 04: Validate warning message if First Name empty or contains specific characters - Screenshot saved to screenshots/TC_04__Validate_warning_message_if_First_Name_empty_or_contains_specific_characters.png
-Test status: failed

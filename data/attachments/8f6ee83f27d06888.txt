@@ -1,2 +1,0 @@
-Finished: TC 10: Validate warning message if no Subjects is selected - Screenshot saved to screenshots/TC_10__Validate_warning_message_if_no_Subjects_is_selected.png
-Test status: failed
