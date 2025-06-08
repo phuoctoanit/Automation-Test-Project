@@ -36,6 +36,9 @@ jobs:
 
       - name: Start mock api server
         run:  |
+          echo ${{ secrets.AUTH_TOKEN }}
+          echo ${{ secrets.USERNAME }}
+          echo ${{ secrets.PASSWORD }}
           npx ts-node mock-apis/src/server.ts & 
           sleep 2
 
