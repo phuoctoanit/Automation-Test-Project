@@ -46,7 +46,18 @@ export const test = base.extend<TestFixtures, WorkerFixtures> ({
     pageManager: async ({sharedPage}, use) => {
         const pom = new PageManager(sharedPage);
         await use(pom);
-    }
+    },
+});
+
+test.afterEach(async ({ sharedPage }, testInfo) => {
+    // Take a screenshot after each test
+    const fileName = testInfo.title.replace(/[^a-zA-Z0-9-_]/g, '_') + '.png';
+    const screenshotPath = `screenshots/${fileName}`;
+    await sharedPage.screenshot({ path: screenshotPath, fullPage: true });
+    console.log(`Finished: ${testInfo.title} - Screenshot saved to ${screenshotPath}`);
+    console.log(`Test status: ${testInfo.status}`);
+    const bodyExists = await sharedPage.isVisible('body');
+    expect(bodyExists).toBe(true);
 });
 
 export {expect, TestFixtures, WorkerFixtures }
