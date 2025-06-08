@@ -1,0 +1,2 @@
+Finished: TC 09: Validate warning message if no Hobbies is selected - Screenshot saved to screenshots/TC_09__Validate_warning_message_if_no_Hobbies_is_selected.png
+Test status: passed

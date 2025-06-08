@@ -1,0 +1,2 @@
+Finished: TC 07: Validate warning message if User Number is invalid - Screenshot saved to screenshots/TC_07__Validate_warning_message_if_User_Number_is_invalid.png
+Test status: passed

@@ -1,0 +1,2 @@
+Finished: TC 08: Validate warning message if no Gender is selected - Screenshot saved to screenshots/TC_08__Validate_warning_message_if_no_Gender_is_selected.png
+Test status: passed

@@ -1,0 +1,2 @@
+Finished: TC 02: User can submit the form with all valid data - Screenshot saved to screenshots/TC_02__User_can_submit_the_form_with_all_valid_data.png
+Test status: passed
