@@ -1,4 +1,4 @@
-export enum Data {
+export enum ExcelData {
     SheetName = 'Data',
     TestCase_ID_ColumnIndex = 0,
     TestCase_Title_ColumnIndex = 1,

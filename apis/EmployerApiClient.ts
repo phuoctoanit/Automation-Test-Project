@@ -1,4 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
+import { APIEndpoint } from "../constants/APIEndpoint";
 import { BaseAPIs } from "./BaseAPIs";
 
 export class EmployerApiClient extends BaseAPIs {
@@ -7,7 +8,7 @@ export class EmployerApiClient extends BaseAPIs {
 
     constructor(request: APIRequestContext, baseUrl: string, token?: string) {
         super(request, baseUrl, token);
-        this.endpoint = '/employers';
+        this.endpoint = APIEndpoint.Employer;
     }
 
     /**

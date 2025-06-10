@@ -3,7 +3,7 @@ import {FormData} from '../../form-data/formData';
 import * as fs from 'fs';
 import * as path from 'path';
 import { ExcelUtils } from '../../utils/ExcelUtils';
-import { Data } from '../../constants/Data';
+import { ExcelData } from '../../constants/ExcelData';
 
 test.describe('@submission Automation-Test-Project', async () => {
     
@@ -11,7 +11,7 @@ test.describe('@submission Automation-Test-Project', async () => {
         const homePage = pageManager.getHomePage();
 
         const formData = ExcelUtils.parseRowData(
-            path.resolve(__dirname, '../../resources/data-forms/Data.xlsx'), Data.SheetName, 1);
+            path.resolve(__dirname, '../../resources/data-forms/Data.xlsx'), ExcelData.SheetName, 1);
 
         await test.step('1. Navigate to the automation practice form page', async () => {
             await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
@@ -35,7 +35,7 @@ test.describe('@submission Automation-Test-Project', async () => {
         const homePage = pageManager.getHomePage();
         //can use a CSV  or JSON file to store the form data
         const formData = ExcelUtils.parseRowData(
-            path.resolve(__dirname, '../../resources/data-forms/Data.xlsx'), Data.SheetName, 2);
+            path.resolve(__dirname, '../../resources/data-forms/Data.xlsx'), ExcelData.SheetName, 2);
 
         await test.step('1. Navigate to the automation practice form page', async () => {
             await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};

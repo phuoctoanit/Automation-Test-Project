@@ -10,7 +10,7 @@ export abstract class BaseAPIs {
      * Base class for API interactions.
      * This class can be extended to implement specific API methods.
      */
-    constructor(request: APIRequestContext, baseUrl: string = 'http://localhost:3000', authToken?: string) {
+    constructor(request: APIRequestContext, baseUrl: string, authToken?: string) {
         this.request = request;
         this.baseUrl = baseUrl;
         this.authToken = authToken;
