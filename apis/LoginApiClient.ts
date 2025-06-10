@@ -1,4 +1,5 @@
 import { APIRequestContext, APIResponse } from "@playwright/test";
+import { APIEndpoint } from "../constants/APIEndpoint";
 import { BaseAPIs } from "./BaseAPIs";
 
 export class LoginApiClient extends BaseAPIs{
@@ -7,7 +8,7 @@ export class LoginApiClient extends BaseAPIs{
     
     constructor(request: APIRequestContext, baseUrl: string ) {
         super(request, baseUrl);
-        this.endpoint = '/auth';
+        this.endpoint = APIEndpoint.Auth;
     }
 
     async login(username: string, password: string): Promise<APIResponse> {

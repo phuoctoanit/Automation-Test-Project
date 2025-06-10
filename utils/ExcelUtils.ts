@@ -1,7 +1,7 @@
 import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 import { FormData } from '../form-data/formData';
-import { Data } from '../constants/Data';
+import { ExcelData } from '../constants/ExcelData';
 
 export class ExcelUtils {
 
@@ -141,20 +141,20 @@ export class ExcelUtils {
         }
         // Example implementation: return row values (you can adjust as needed)
         const rowValues = this.getRowValues(filePath, sheet, rowIndex);
-        const dateOfBirth = this.formatExcelDate(rowValues[Data.DateOfBirth_ColumnIndex] as string);
+        const dateOfBirth = this.formatExcelDate(rowValues[ExcelData.DateOfBirth_ColumnIndex] as string);
         return {
-            firstName: rowValues[Data.FirstName_ColumnIndex] as string || '',
-            lastName: rowValues[Data.LastName_ColumnIndex] as string || '',
-            email: rowValues[Data.Email_ColumnIndex] as string || '',
-            gender: rowValues[Data.Gender_ColumnIndex] as string || '',
-            userNumber: rowValues[Data.Mobile_ColumnIndex] as string || '',
+            firstName: rowValues[ExcelData.FirstName_ColumnIndex] as string || '',
+            lastName: rowValues[ExcelData.LastName_ColumnIndex] as string || '',
+            email: rowValues[ExcelData.Email_ColumnIndex] as string || '',
+            gender: rowValues[ExcelData.Gender_ColumnIndex] as string || '',
+            userNumber: rowValues[ExcelData.Mobile_ColumnIndex] as string || '',
             dateOfBirth: dateOfBirth,
-            subjects: (rowValues[Data.Subjects_ColumnIndex] as string)?.split(',').map(s => s.trim()) || [],
-            hobbies: (rowValues[Data.Hobbies_ColumnIndex] as string)?.split(',').map(s => s.trim()) || [],
-            picture: rowValues[Data.Picture_ColumnIndex] as string || '',
-            currentAddress: rowValues[Data.Address_ColumnIndex] as string || '',
-            state: rowValues[Data.State_ColumnIndex] as string || '',
-            city: rowValues[Data.City_ColumnIndex] as string || ''
+            subjects: (rowValues[ExcelData.Subjects_ColumnIndex] as string)?.split(',').map(s => s.trim()) || [],
+            hobbies: (rowValues[ExcelData.Hobbies_ColumnIndex] as string)?.split(',').map(s => s.trim()) || [],
+            picture: rowValues[ExcelData.Picture_ColumnIndex] as string || '',
+            currentAddress: rowValues[ExcelData.Address_ColumnIndex] as string || '',
+            state: rowValues[ExcelData.State_ColumnIndex] as string || '',
+            city: rowValues[ExcelData.City_ColumnIndex] as string || ''
         };
     }
 }
