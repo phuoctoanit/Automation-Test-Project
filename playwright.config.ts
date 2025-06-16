@@ -1,4 +1,5 @@
 import { defineConfig } from '@playwright/test';
+import os from 'os';
 
 export default defineConfig({
   testDir: './tests',
@@ -14,5 +15,18 @@ export default defineConfig({
     ['line'], 
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['allure-playwright']
+  ],
+  workers: 4,
+  projects: [
+    {
+      name: 'api-tests',
+      testMatch: /tests\/api\/.*\.spec\.ts/,
+      fullyParallel: true,
+    },
+    {
+      name: 'form-tests',
+      testMatch: /tests\/form\/.*\.spec\.ts/,
+      fullyParallel: true,
+    },
   ],
 });
