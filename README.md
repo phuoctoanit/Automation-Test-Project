@@ -39,44 +39,80 @@ npx playwright install
 
 ## 3. Framework Structure
 <pre>
-├── README.md
+├── apis
+│   ├── BaseAPIs.ts
+│   ├── EmployerApiClient.ts
+│   └── LoginApiClient.ts
 ├── constants
-│   └── Color.ts #include constants or Enum values
+│   ├── APIEndpoint.ts
+│   ├── Color.ts
+│   └── ExcelData.ts
 ├── form-data
-│   └── formData.ts #define form data
+│   └── formData.ts
+├── image.png
+├── mock-apis
+│   ├── configs
+│   │   └── config.ts
+│   └── src
+│       ├── app.ts
+│       ├── auth
+│       │   └── login.ts
+│       ├── controllers
+│       │   └── employer.controller.ts
+│       ├── middlewares
+│       │   └── auth.ts
+│       ├── models
+│       │   └── employer.model.ts
+│       ├── routers
+│       │   ├── employer.routers.ts
+│       │   └── login.routers.ts
+│       └── server.ts
 ├── package-lock.json
 ├── package.json
-├── page #contains the page objects for each page
-│   ├── BasePage.ts #parent class, includes common locator and method
+├── pages
+│   ├── BasePage.ts
 │   ├── HomePage.ts
-│   └── PageManager.ts #Page Object Model Management, init a class object
-├── playwright-report #output reporting
-├── playwright.config.ts #contains the playwright configuration
+│   └── PageManager.ts
+├── playwright.config.ts
+├── README.md
 ├── resources
-│   └── cat.jpeg
-├── test-results
-└── tests
-    ├── form
-    │   ├── 01 - default-value.spec.ts
-    │   ├── 02 - submission.spec.ts
-    │   └── 03 - validations.spec.ts
-    └── shared.fixtures.ts
+│   ├── data-forms
+│   │   └── Data.xlsx
+│   └── images
+│       └── cat.jpeg
+├── tests
+│   ├── api
+│   │   └── employer-api.spec.ts
+│   ├── form
+│   │   ├── 00 - validations.spec.ts
+│   │   ├── 01 - default-value.spec.ts
+│   │   └── 02 - submission.spec.ts
+│   └── shared.fixtures.ts
+├── tsconfig.json
+└── utils
+    └── ExcelUtils.ts
 </pre>
 ## 4. 🧪 Execution
 
-#### 1. Run All Tests
+#### 1. Start mock API
+
+```console
+npx ts-node mock-apis/src/server.ts
+
+```
+#### 2. Run All Tests
 
 ```console
 npx playwright test
 ```
 
-#### 2. Run Specific Test File
+#### 3. Run Specific Test File
 
 ```console
 npx playwright test tests/form/03 - validation.spec.ts
 ```
 
-#### 3. Run with Tagged Tests (e.g.: @validation)
+#### 4. Run with Tagged Tests (e.g.: @validation)
 
 ```console
 npx playwright test --grep @validation

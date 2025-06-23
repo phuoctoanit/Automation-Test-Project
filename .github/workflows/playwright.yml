@@ -52,17 +52,11 @@ jobs:
           echo "Starting mock API server..."
           npx ts-node mock-apis/src/server.ts &
           sleep 2
-
-      - name: ▶️ Run API automation testing
-        run: |
-          echo "Running API Testing...."
-          npx playwright test tests/api || true
-          echo "API tests completed."
         
       - name: ▶️ Run Playwright tests on UI
         run: |
           echo "Running Playwright tests..."
-          npx playwright test tests/form || true
+          npx playwright test tests || true
           echo "Playwright tests completed."
 
       - name: 📝 Check if Playwright report exists
