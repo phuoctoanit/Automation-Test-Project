@@ -1,2 +1,0 @@
-[Worker 9] Starting a new test case TC 09: Validate warning message if no Hobbies is selected
-[Worker 9] Completed: TC 09: Validate warning message if no Hobbies is selected with status: PASSED
