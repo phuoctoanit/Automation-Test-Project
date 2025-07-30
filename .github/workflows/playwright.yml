@@ -114,10 +114,12 @@ jobs:
       
       - name: Generate Allure Report
         run: |
-          echo "Making allure-setup.sh executable..."
-          chmod +x setups/allure-setup.sh
-          echo "Running allure-setup.sh..."
-          ./setups/allure-setup.sh
+          mkdir -p allure-results/history
+          cp -r allure-report/history allure-results/ 2>/dev/null || true
+          echo "Clean old report manually"
+          rm -rf allure-report
+          echo "Generate new report"
+          npx allure generate allure-results -o allure-report
         
       - name: 📦 Upload Allure Report Artifact
         uses: actions/upload-artifact@v4
