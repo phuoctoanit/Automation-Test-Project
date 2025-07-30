@@ -14,9 +14,36 @@ env:
 
 jobs:
 
-  install:
-    name: 🧩 Install Dependencies
+  # install:
+  #   name: 🧩 Install Dependencies
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: ⬇️ Checkout code
+  #       uses: actions/checkout@v3
+
+  #     - name: 🟢 Setup Node.js
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 20
+
+  #     - name: 📦 Install dependencies
+  #       run: npm ci
+
+  #     - name: 🧱 Install Playwright browsers
+  #       run: npx playwright install --with-deps
+          
+  #     - name: 📊 Install Allure CLI
+  #       run: npm install -g allure-commandline  
+    
+  api-testing:
+    name: 🧪 Run API Tests
     runs-on: ubuntu-latest
+    # needs: install
+    env:
+      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }} # Removed or comment out if not defined
+      USERNAME: ${{ secrets.USERNAME }}
+      PASSWORD: ${{ secrets.PASSWORD }} # Uncomment if PASSWORD secret is defined in repository settings
 
     steps:
       - name: ⬇️ Checkout code
@@ -35,17 +62,13 @@ jobs:
           
       - name: 📊 Install Allure CLI
         run: npm install -g allure-commandline  
-    
-  api-testing:
-    name: 🧪 Run API Tests
-    runs-on: ubuntu-latest
-    needs: install
-    env:
-      AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }} # Removed or comment out if not defined
-      USERNAME: ${{ secrets.USERNAME }}
-      PASSWORD: ${{ secrets.PASSWORD }} # Uncomment if PASSWORD secret is defined in repository settings
 
-    steps:
+      - name: 🔍 Debug — List files
+        run: |
+          echo "Branch: ${{ github.ref }}"
+          echo "List of files in current directory:"
+          find . -type f
+
       - name: Start mock api server
         run: |
           if [ -z "${{ secrets.AUTH_TOKEN }}" ]; then
@@ -87,12 +110,29 @@ jobs:
   ui-testing:
     name: 🧪 Run UI Testing
     runs-on: ubuntu-latest
-    needs: install
+    # needs: install
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]
 
     steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧱 Install Playwright browsers
+        run: npx playwright install --with-deps
+          
+      - name: 📊 Install Allure CLI
+        run: npm install -g allure-commandline
+
       - name: ▶️ Run Playwright tests on UI
         run: |
           echo "Running UI tests on browser: ${{ matrix.browser }} and environment: ${{ env.env }}"
