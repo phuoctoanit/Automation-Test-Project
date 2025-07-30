@@ -56,6 +56,10 @@ test.describe('@validation Automation-Test-Project', async () => {
         //If submit Last Name empty, expected to see warning message
     });
 
+    test.skip('TC 07: Validate warning message if Last Name empty or contains specific characters', async ({ page }) => {
+        //If submit Last Name empty, expected to see warning message
+    });
+
     test('TC 05: Validate warning message if Last Name empty or contains specific characters', async ({ page }) => {
         const pageManager = new PageManager(page);
         const homePage = pageManager.getHomePage();
