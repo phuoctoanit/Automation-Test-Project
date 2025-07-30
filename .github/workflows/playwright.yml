@@ -131,13 +131,6 @@ jobs:
           ENV=${{ env.env }} npx playwright test tests/form --project=${{ matrix.browser }} || true
           echo "Playwright tests completed."
 
-      # - name: 📁 Check Allure Results ${{ matrix.browser }}
-      #   if: always()
-      #   run: |
-      #     echo "Checking allure-results-${{ matrix.browser }}..."
-      #     ls -la
-      #     ls -la allure-results-${{ matrix.browser }} || echo "❌ No allure-results-${{ matrix.browser }} directory"
-
       - name: 📤 Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
@@ -173,7 +166,7 @@ jobs:
           path: ./merged-results
         continue-on-error: true
         
-      - name: ⬇️ Download Webkit Allure Results
+      - name: ⬇️ Download API Allure Results
         uses: actions/download-artifact@v4
         with:
           name: allure-results-api
@@ -219,7 +212,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           rm -rf allure-report
-          npx allure generate ./merged-results -o allure-report
+          allure generate ./merged-results -o allure-report
 
       - name: 📦 Upload Allure Report Artifact
         uses: actions/upload-artifact@v4
