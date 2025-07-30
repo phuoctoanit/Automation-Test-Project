@@ -1,2 +1,0 @@
-[Worker 10] Starting a new test case TC 03: User can submit the form with if input required filed only
-[Worker 10] Completed: TC 03: User can submit the form with if input required filed only with status: PASSED
