@@ -63,23 +63,23 @@ jobs:
           ENV=${{ env.env }} npx playwright test tests --project=${{ matrix.browser }} || true
           echo "Playwright tests completed."   
 
-      - name: 📝 Check if Playwright report exists
-        if: always()
-        run: |
-          echo "Checking for Playwright report..."
-          if [ -d playwright-report-${{ matrix.browser }} ]; then
-            echo "✅ Report exists."
-          else
-            echo "❌ Report directory not found!"
-          fi  
+      # - name: 📝 Check if Playwright report exists
+      #   if: always()
+      #   run: |
+      #     echo "Checking for Playwright report..."
+      #     if [ -d playwright-report-${{ matrix.browser }} ]; then
+      #       echo "✅ Report exists."
+      #     else
+      #       echo "❌ Report directory not found!"
+      #     fi  
       
-      - name: 📤 Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report-${{ matrix.browser }}
-          path: playwright-report
-          if-no-files-found: warn
+      # - name: 📤 Upload Playwright report
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: playwright-report-${{ matrix.browser }}
+      #     path: playwright-report
+      #     if-no-files-found: warn
 
       - name: 📁 Check Allure Results
         if: always()
@@ -94,11 +94,35 @@ jobs:
         with:
           name: allure-results-${{ matrix.browser }}
           path: allure-results
-          if-no-files-found: warn    
+          if-no-files-found: warn
+
+  merge:
+    name: 🏗️ Merge Allure Results
+    needs: execute
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Download Chromium Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-chromium
+          path: ./merged-results
+
+      - name: ⬇️ Download Firefox Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-firefox
+          path: ./merged-results
+
+      - name: ⬇️ Download Webkit Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results-webkit
+          path: ./merged-results  
 
   publish:
     name: 🚀 Publish Allure Report
-    needs: execute
+    needs: merge
     runs-on: ubuntu-latest
 
     steps:
@@ -112,8 +136,8 @@ jobs:
 
       - name: ♻️ Copy Allure history
         run: |
-          if [ -d "allure-history" ] && [ -d "allure-results" ]; then
-            cp -r allure-history/* allure-results/history/ || true
+          if [ -d "allure-history" ] && [ -d "merged-results" ]; then
+            cp -r allure-history/* merged-results/history/ || true
           fi
 
       - name: 📊 Install Allure CLI
@@ -122,7 +146,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           rm -rf allure-report
-          npx allure generate allure-results -o allure-report
+          npx allure generate merged-results -o allure-report
 
       - name: 📦 Upload Allure Report Artifact
         uses: actions/upload-artifact@v4
@@ -140,8 +164,8 @@ jobs:
       - name: ⬇️ Download Allure Results Artifact
         uses: actions/download-artifact@v4
         with:
-          name: allure-results
-          path: allure-results    
+          name: merged-results
+          path: merged-results 
 
       - name: 📤 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
