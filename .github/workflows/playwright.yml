@@ -59,9 +59,6 @@ jobs:
 
       - name: 🧱 Install Playwright browsers
         run: npx playwright install --with-deps
-          
-      - name: 📊 Install Allure CLI
-        run: npm install -g allure-commandline
 
       - name: Start mock api server
         run: |
@@ -123,9 +120,6 @@ jobs:
 
       - name: 🧱 Install Playwright browsers
         run: npx playwright install --with-deps
-          
-      - name: 📊 Install Allure CLI
-        run: npm install -g allure-commandline
 
       - name: ▶️ Run Playwright tests on UI
         run: |
@@ -218,6 +212,9 @@ jobs:
           if [ -d "allure-history" ] && [ -d "merged-results" ]; then
             cp -r allure-history/* merged-results/history
           fi
+          
+      - name: 📊 Install Allure CLI
+        run: npm install -g allure-commandline
 
       - name: Generate Allure Report
         run: |
