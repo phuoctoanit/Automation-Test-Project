@@ -22,6 +22,8 @@ export default defineConfig({
     baseURL: process.env.BASE_URL,
   },
   reporter: [
+    ['list'],
+    ['json', { outputFile: 'playwright-report/results.json' }],
     ['line'], 
     ['html', { outputFolder: 'playwright-report', open: 'never' }],
     ['allure-playwright', { outputFolder: 'allure-results', detail: true }],
