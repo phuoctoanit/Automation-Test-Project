@@ -97,7 +97,7 @@ jobs:
     name: 🚀 Publish Allure Report
     needs: execute  # Waits for test job to complete
     runs-on: ubuntu-latest
-    
+
     steps:
       # Download previous Allure history (if exists)
       - name: Download Allure History
@@ -105,13 +105,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-history
-          path: allure-results/history
-      # Copy previous history to allure results (if it exists)
-      - name: Restore Allure History
-        if: always()
+          path: allure-history
+          
+      - name: ♻️ Copy Allure history
         run: |
-          if [ -d "allure-results/history" ]; then
-            echo "History found, ready for trend"
+          if [ -d "allure-history" ]; then
+            cp -r allure-history/* allure-results/ || true
           fi
 
       - name: ⬇️ Download Allure Results Artifact

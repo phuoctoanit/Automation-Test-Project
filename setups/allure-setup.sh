@@ -9,7 +9,7 @@ cp -r allure-report/history allure-results/ 2>/dev/null || true
 rm -rf allure-report
 
 # Generate new report
-npx allure generate allure-results -o allure-report
+allure generate allure-results -o allure-report --clean
 
 # Open report
 allure open allure-report
