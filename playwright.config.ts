@@ -10,8 +10,6 @@ if (fs.existsSync(envFile)) {
   dotenv.config({ path: envFile });
 }
 
-console.log(`Running on environment: ${envFile}`);
-
 export default defineConfig({
   testDir: './tests',
   timeout: 30 * 1000,
@@ -30,11 +28,17 @@ export default defineConfig({
   ],
   workers: 4,
   projects: [
-    // {
-    //   name: 'api-tests',
-    //   testMatch: /tests\/api\/.*\.spec\.ts/,
-    //   fullyParallel: true,
-    // },
+    {
+      name: 'api',
+      testMatch: /tests\/api\/.*\.spec\.ts/,
+      fullyParallel: true,
+      use: {
+        baseURL: process.env.API_URL || 'http://localhost:3001',
+        extraHTTPHeaders: {
+          'Content-Type': 'application/json',
+        },
+      },
+    },
     // {
     //   name: 'form-tests',
     //   testMatch: /tests\/form\/.*\.spec\.ts/,
