@@ -81,12 +81,12 @@ jobs:
       #     path: playwright-report
       #     if-no-files-found: warn
 
-      - name: 📁 Check Allure Results
+      - name: 📁 Check Allure Results ${{ matrix.browser }}
         if: always()
         run: |
-          echo "Checking allure-results..."
+          echo "Checking allure-results-${{ matrix.browser }}..."
           ls -la
-          ls -la allure-results-${{ matrix.browser }} || echo "❌ No allure-results directory"
+          ls -la allure-results-${{ matrix.browser }} || echo "❌ No allure-results-${{ matrix.browser }} directory"
 
       - name: 📤 Upload Allure results
         if: always()
@@ -154,7 +154,7 @@ jobs:
       - name: ♻️ Copy Allure history
         run: |
           if [ -d "allure-history" ] && [ -d "merged-results" ]; then
-            cp -r allure-history/* merged-results/history/ || true
+            cp -r allure-history/* merged-results/history
           fi
 
       - name: 📊 Install Allure CLI
