@@ -1,2 +1,0 @@
-[Worker 13] Starting a new test case TC 12: Validate no warning message if Current Address is empty
-[Worker 13] Completed: TC 12: Validate no warning message if Current Address is empty with status: PASSED
