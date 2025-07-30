@@ -107,6 +107,13 @@ jobs:
           name: allure-history
           path: allure-history
           
+      - name: Handle Missing Allure History
+        run: |
+          if [ ! -d "allure-history" ]; then
+            echo "No previous Allure history found. This is normal for the first run."
+            mkdir -p allure-history
+          fi
+
       - name: ♻️ Copy Allure history
         run: |
           if [ -d "allure-history" ]; then
