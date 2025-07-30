@@ -101,7 +101,7 @@ jobs:
     steps:
       - name: Handle Missing Allure History
         run: |
-          if [ ! -d "allure-history" ]; then
+          if [ ! -d "allure-report/history" ]; then
             echo "No previous Allure history found. This is normal for the first run."
             mkdir -p allure-history
           fi
@@ -112,13 +112,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: allure-history
-          path: allure-history
+          path: allure-report/history
         continue-on-error: true
 
       - name: ♻️ Copy Allure history
         run: |
-          if [ -d "allure-history" ]; then
-            cp -r allure-history/* allure-results/ || true
+          if [ -d "allure-report/history" ]; then
+            cp -r allure-report/history allure-results/ || true
           fi
 
       - name: ⬇️ Download Allure Results Artifact
@@ -138,8 +138,8 @@ jobs:
         run: |
           # mkdir -p allure-results/history
           # cp -r allure-report/history allure-results/ 2>/dev/null || true
-          # echo "Clean old report manually "
-          # rm -rf allure-report
+          echo "Clean old report manually "
+          rm -rf allure-report
           echo "Generate new report"
           npx allure generate allure-results -o allure-report
         
