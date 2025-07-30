@@ -1,0 +1,2 @@
+[Worker 9] Starting a new test case TC 10: Validate warning message if no Subjects is selected
+[Worker 9] Completed: TC 10: Validate warning message if no Subjects is selected with status: FAILED
