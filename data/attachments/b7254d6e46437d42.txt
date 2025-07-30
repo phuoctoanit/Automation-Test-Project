@@ -1,0 +1,2 @@
+[Worker 12] Starting a new test case TC 08: Validate warning message if no Gender is selected
+[Worker 12] Completed: TC 08: Validate warning message if no Gender is selected with status: PASSED
