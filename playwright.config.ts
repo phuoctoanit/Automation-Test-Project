@@ -2,39 +2,15 @@ import { defineConfig } from '@playwright/test';
 import os from 'os';
 import path from 'path';
 import dotenv from 'dotenv';
-import { env } from 'process';
+import * as fs from 'fs';
+import { Logger } from './utils/Logger';
 
-// const ENV = process.env.ENV || 'staging';
-// dotenv.config({ path: path.resolve(__dirname, `.env.${ENV}`) });
+const envFile = `.env.${process.env.ENV || 'dev'}`;
+if (fs.existsSync(envFile)) {
+  dotenv.config({ path: envFile });
+}
 
-// const testTypes = [
-//   { name: 'api', testMatch: /tests\/api\/.*\.spec\.ts/ },
-//   { name: 'form', testMatch: /tests\/form\/.*\.spec\.ts/ },
-// ];
-
-
-// const environments = [
-//   { name: 'dev', webURL: process.env.WEB_BASE_URL, apiURL: process.env.API_BASE_URL },
-//   { name: 'qa', webURL: process.env.WEB_BASE_URL, apiURL: process.env.API_BASE_URL },
-//   { name: 'staging', webURL: process.env.WEB_BASE_URL, apiURL: process.env.API_BASE_URL },
-// ];
-
-// const projects= environments.flatMap(env =>
-//   testTypes.map(type => ({
-//     name: `${type.name}-${env.name}`,
-//     testMatch: type.testMatch,
-//     use: {
-//       baseURL: env.webURL,
-//       apiBaseURL: env.apiURL,
-//       headless: true,
-//     },
-//     fullyParallel: true,
-//   }))
-// );
-
-// console.log(`Running tests in ${os.platform()} on ${os.cpus().length} CPUs`);
-// console.log(`Environment: ${ENV}`);
-// console.log(`projects: ${JSON.stringify(projects, null, 2)}`);
+console.log(`Running on environment: ${envFile}`);
 
 export default defineConfig({
   testDir: './tests',
@@ -44,12 +20,8 @@ export default defineConfig({
     headless: true,
     screenshot: 'only-on-failure', //only-on-failure
     video: 'retain-on-failure', // 'on' | 'retain-on-failure' | 'off'
-    // video: {
-    //     mode: 'on', //'retain-on-failure',
-    //     size: { width: 1280, height: 720 },
-    // },
     trace: process.env.CI ? 'off' : 'on-first-retry',
-    baseURL: process.env.WEB_BASE_URL || '',
+    baseURL: process.env.BASE_URL,
   },
   reporter: [
     ['line'], 
@@ -57,7 +29,6 @@ export default defineConfig({
     ['allure-playwright', { outputFolder: 'allure-results', detail: true }],
   ],
   workers: 4,
-  //projects: projects,
   projects: [
     // {
     //   name: 'api-tests',
@@ -83,5 +54,12 @@ export default defineConfig({
       },
       fullyParallel: true,
     },
+    {
+      name: 'webkit',
+      use: {
+        viewport: { width: 1280, height: 720 }
+      },
+      fullyParallel: true,
+    }
   ],
 });

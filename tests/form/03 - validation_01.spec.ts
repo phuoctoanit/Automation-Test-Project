@@ -3,7 +3,7 @@ import { PageManager } from "../../pages/PageManager";
 
 test.describe('@validation Automation-Test-Project', async () => {
 
-    test('TC 04: Validate warning message if First Name empty or contains specific characters', async ({page}, testInfo: TestInfo) => {
+    test('TC 04: Validate warning message if First Name empty or contains specific characters', async ({page, baseURL}, testInfo: TestInfo) => {
         //If submit First Name empty, expected to see warning message
 
         // const browser = await chromium.launch({ headless: true });
@@ -18,7 +18,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         const pageManager = new PageManager(page);
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await page.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
+            await page.goto(baseURL!), {timeout: 60000};
             
             //await page.waitForTimeout(19000); // just to show some activity
             await page.waitForURL('**/automation-practice-form', { timeout: 10000 });
@@ -60,11 +60,11 @@ test.describe('@validation Automation-Test-Project', async () => {
         //If submit Last Name empty, expected to see warning message
     });
 
-    test('TC 05: Validate warning message if Last Name empty or contains specific characters', async ({ page }) => {
+    test('TC 05: Validate warning message if Last Name empty or contains specific characters', async ({ page, baseURL }) => {
         const pageManager = new PageManager(page);
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
-            await page.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
+            await page.goto(baseURL!), {timeout: 60000};
             await page.waitForURL('**/automation-practice-form', { timeout: 10000 });
             await expect(page, { message: 'The page title is not as expected'}).toHaveTitle('DEMOQA');
         });

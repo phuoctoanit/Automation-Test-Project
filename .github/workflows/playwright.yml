@@ -13,11 +13,14 @@ jobs:
   execute:
     name: 🧪 Run Playwright Tests
     runs-on: ubuntu-latest
-    env: 
-      BROWSER: chromium
+    env:
+      env: dev
       AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }} # Removed or comment out if not defined
       USERNAME: ${{ secrets.USERNAME }}
       PASSWORD: ${{ secrets.PASSWORD }} # Uncomment if PASSWORD secret is defined in repository settings
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
 
     steps:
       - name: ⬇️ Checkout code
@@ -57,7 +60,7 @@ jobs:
       - name: ▶️ Run Playwright tests on UI
         run: |
           echo "Running Playwright tests..."
-          npx playwright test tests --project=${BROWSER} || true
+          ENV=${{ env.env }} npx playwright test tests --project=${{ matrix.browser }} || true
           echo "Playwright tests completed."   
 
       - name: 📝 Check if Playwright report exists
