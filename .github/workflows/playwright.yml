@@ -111,7 +111,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ matrix.browser }}
+          name: allure-results-${{ matrix.browser }}-${{ matrix.shard }}
           path: allure-results
           if-no-files-found: warn
 
@@ -121,33 +121,44 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Download Chromium Allure Results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results-chromium
-          path: ./merged-results
-        continue-on-error: true
+      # - name: ⬇️ Download Chromium Allure Results
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: allure-results-chromium
+      #     path: ./merged-results
+      #   continue-on-error: true
 
-      - name: ⬇️ Download Firefox Allure Results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results-firefox
-          path: ./merged-results
-        continue-on-error: true    
+      # - name: ⬇️ Download Firefox Allure Results
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: allure-results-firefox
+      #     path: ./merged-results
+      #   continue-on-error: true    
 
-      - name: ⬇️ Download Webkit Allure Results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results-webkit
-          path: ./merged-results
-        continue-on-error: true
+      # - name: ⬇️ Download Webkit Allure Results
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: allure-results-webkit
+      #     path: ./merged-results
+      #   continue-on-error: true
         
-      - name: ⬇️ Download API Allure Results
+      # - name: ⬇️ Download API Allure Results
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     name: allure-results-api
+      #     path: ./merged-results
+      #   continue-on-error: true
+      - name: ⬇️ Download all allure artifacts
         uses: actions/download-artifact@v4
         with:
-          name: allure-results-api
-          path: ./merged-results
-        continue-on-error: true  
+          path: downloaded-results
+
+      - name: 🔀 Merge Allure results
+        run: |
+          mkdir merged-results
+          find downloaded-results -type d -name 'allure-results-*' | while read dir; do
+            cp -r "$dir"/* merged-results/
+          done
 
       - name: 📤 Upload Allure results
         if: always()
