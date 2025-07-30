@@ -1,2 +1,0 @@
-[Worker 10] Starting a new test case TC 01: Validate of value Gender, Hobbies, default date of birthday
-[Worker 10] Completed: TC 01: Validate of value Gender, Hobbies, default date of birthday with status: TIMEDOUT

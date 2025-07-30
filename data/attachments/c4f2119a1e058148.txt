@@ -1,0 +1,2 @@
+[Worker 2] Starting a new test case TC 02: User can submit the form with all valid data
+[Worker 2] Completed: TC 02: User can submit the form with all valid data with status: PASSED
