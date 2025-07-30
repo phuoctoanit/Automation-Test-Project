@@ -1,2 +1,0 @@
-[Worker 4] Starting a new test case TC 05: Validate warning message if Last Name empty or contains specific characters
-[Worker 4] Completed: TC 05: Validate warning message if Last Name empty or contains specific characters with status: FAILED

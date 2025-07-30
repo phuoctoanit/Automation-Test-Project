@@ -1,2 +1,0 @@
-[Worker 2] Starting a new test case TC 06: Validate warning message if Email is invalid
-[Worker 2] Completed: TC 06: Validate warning message if Email is invalid with status: PASSED
