@@ -97,8 +97,23 @@ jobs:
     name: 🚀 Publish Allure Report
     needs: execute  # Waits for test job to complete
     runs-on: ubuntu-latest
-
+    
     steps:
+      # Download previous Allure history (if exists)
+      - name: Download Allure History
+        if: always()
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: allure-results/history
+      # Copy previous history to allure results (if it exists)
+      - name: Restore Allure History
+        if: always()
+        run: |
+          if [ -d "allure-results/history" ]; then
+            echo "History found, ready for trend"
+          fi
+
       - name: ⬇️ Download Allure Results Artifact
         uses: actions/download-artifact@v4
         with:
@@ -114,10 +129,10 @@ jobs:
       
       - name: Generate Allure Report
         run: |
-          mkdir -p allure-results/history
-          cp -r allure-report/history allure-results/ 2>/dev/null || true
-          echo "Clean old report manually "
-          rm -rf allure-report
+          # mkdir -p allure-results/history
+          # cp -r allure-report/history allure-results/ 2>/dev/null || true
+          # echo "Clean old report manually "
+          # rm -rf allure-report
           echo "Generate new report"
           npx allure generate allure-results -o allure-report
         
@@ -127,6 +142,14 @@ jobs:
           name: allure-report
           path: allure-report
           retention-days: 5
+
+      # Upload new Allure history for the next run
+      - name: Upload Allure History
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-history
+          path: allure-report/history    
 
       - name: ⬇️ Download Allure Report Artifact
         uses: actions/download-artifact@v4
