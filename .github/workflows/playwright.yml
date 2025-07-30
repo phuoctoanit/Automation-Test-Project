@@ -99,6 +99,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Handle Missing Allure History
+        run: |
+          if [ ! -d "allure-history" ]; then
+            echo "No previous Allure history found. This is normal for the first run."
+            mkdir -p allure-history
+          fi
+      
       # Download previous Allure history (if exists)
       - name: Download Allure History
         if: always()
@@ -107,13 +114,6 @@ jobs:
           name: allure-history
           path: allure-history
         continue-on-error: true
-
-      - name: Handle Missing Allure History
-        run: |
-          if [ ! -d "allure-history" ]; then
-            echo "No previous Allure history found. This is normal for the first run."
-            mkdir -p allure-history
-          fi
 
       - name: ♻️ Copy Allure history
         run: |
