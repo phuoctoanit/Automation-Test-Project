@@ -1,2 +1,0 @@
-[Worker 16] Starting a new test case TC 11: User can select and deselect a subject
-[Worker 16] Completed: TC 11: User can select and deselect a subject with status: TIMEDOUT
