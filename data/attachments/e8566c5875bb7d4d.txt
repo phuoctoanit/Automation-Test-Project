@@ -1,2 +1,0 @@
-[Worker 6] Starting a new test case TC 13: Validate warning message if form data is empty
-[Worker 6] Completed: TC 13: Validate warning message if form data is empty with status: FAILED
