@@ -1,5 +1,6 @@
 import { time } from 'console';
-import { test, expect } from '../shared.fixtures';
+import { test, expect } from './fixtures/shared.fixtures';
+import { Logger } from '../../utils/Logger';
 
 test.describe('@default Automation-Test-Project', async () => {
 

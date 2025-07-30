@@ -1,7 +1,7 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { Color } from "../constants/Color";
 
-export class BasePage {
+export abstract class BasePage {
 
     protected page: Page;
 
@@ -50,10 +50,10 @@ export class BasePage {
      */
     async expectInputToBeInvalid(locator: Locator) {
         const parentHasValidated = await this.page.locator('form').getAttribute('class');
-        expect(parentHasValidated).toContain('was-validated');
+        expect(parentHasValidated, { message: 'The form should be validated'}).toContain('was-validated');
 
         const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
-        expect(hasInvalid).toBe(true);
+        expect(hasInvalid, { message: 'The input should be invalid'}).toBe(true);
 
         await expect.poll(async () => {
             return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));
@@ -69,10 +69,10 @@ export class BasePage {
      */
     async expectInputToBeValid(locator: Locator) {
         const hasInvalid = await locator.evaluate(el => el.matches(':invalid'));
-        expect(hasInvalid).toBe(false);
+        expect(hasInvalid, { message: 'The input should be valid'}).toBe(false);
 
         const valid = await locator.evaluate(el => el.matches(':valid'));
-        expect(valid).toBe(true);
+        expect(valid, { message: 'The input should be valid'}).toBe(true);
 
         await expect.poll(async () => {
             return await locator.evaluate(el => window.getComputedStyle(el).getPropertyValue('border-color'));

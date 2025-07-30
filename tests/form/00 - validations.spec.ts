@@ -1,14 +1,18 @@
-import { test, expect } from '../shared.fixtures';
+import { Logger } from '../../utils/Logger';
+import { test, expect } from './fixtures/shared.fixtures';
 
 test.describe('@validation Automation-Test-Project', async () => {
+
 
     test('TC 04: Validate warning message if First Name empty or contains specific characters', async ({ sharedPage, pageManager }) => {
         //If submit First Name empty, expected to see warning message
         const homePage = pageManager.getHomePage();
         await test.step('1. Navigate to the automation practice form page', async () => {
             await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
+            
+            //await sharedPage.waitForTimeout(19000); // just to show some activity
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
-            await expect(sharedPage).toHaveTitle('DEMOQA');
+            await expect(sharedPage, { message: 'The page title is not as expected'}).toHaveTitle('DEMOQA');
         });
         await test.step('2. Leave First Name as blank', async () => {
             //const homePage = pageManager.getHomePage();
@@ -33,7 +37,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         await test.step('1. Navigate to the automation practice form page', async () => {
             await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
-            await expect(sharedPage).toHaveTitle('DEMOQA');
+            await expect(sharedPage, { message: 'The page title is not as expected'}).toHaveTitle('DEMOQA');
         });
         await test.step('2. Leave Last Name as blank', async () => {
             await homePage.lastName.fill('');
@@ -57,7 +61,7 @@ test.describe('@validation Automation-Test-Project', async () => {
         await test.step('1. Navigate to the automation practice form page', async () => {
             await sharedPage.goto('https://demoqa.com/automation-practice-form'), {timeout: 60000};
             await sharedPage.waitForURL('**/automation-practice-form', { timeout: 10000 });
-            await expect(sharedPage).toHaveTitle('DEMOQA');
+            await expect(sharedPage, { message: 'The page title is not as expected'}).toHaveTitle('DEMOQA');
         });
         //If submit Email empty, expected to no see warning message,because field Email is not required
         await test.step('2. Leave Email as blank', async () => {
@@ -231,6 +235,7 @@ test.describe('@validation Automation-Test-Project', async () => {
                 await homePage.expectInputToBeValid(homePage.subjects);
             });
         });
-    });
-});
 
+        
+    });
+});              

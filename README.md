@@ -97,7 +97,7 @@ npx playwright install
 #### 1. Start mock API
 
 ```console
-npx ts-node mock-apis/src/server.ts
+./setups/start-mock-api.sh
 
 ```
 #### 2. Run All Tests

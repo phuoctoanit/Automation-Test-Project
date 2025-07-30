@@ -23,7 +23,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "^22.15.21",
     "@types/xlsx": "^0.0.35",
-    "allure-playwright": "^3.2.2",
+    "allure-playwright": "^3.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },

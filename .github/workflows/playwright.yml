@@ -49,15 +49,22 @@ jobs:
             exit 1
           fi
 
-          echo "Starting mock API server..."
-          npx ts-node mock-apis/src/server.ts &
-          sleep 2
+          echo "Starting mock API server from script..."
+          chmod +x setups/start-mock-api.sh
+          ./setups/start-mock-api.sh &
+          sleep 2 # Wait for the server to start
         
       - name: ▶️ Run Playwright tests on UI
         run: |
           echo "Running Playwright tests..."
           npx playwright test tests || true
           echo "Playwright tests completed."
+
+      - name: Make allure-run.sh executable
+        run: chmod +x ./setups/allure-run.sh
+
+      - name: Run Allure Script
+        run: ./setups/allure-run.sh    
 
       - name: 📝 Check if Playwright report exists
         if: always()

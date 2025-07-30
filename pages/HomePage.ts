@@ -166,7 +166,7 @@ export class HomePage extends BasePage{
         }
         await dropdown.click();
         const option = this.page.locator(`//div[starts-with(@id, "react-select-")][text()="${value}"]`);
-        await expect(option).toBeVisible();
+        await expect(option, { message: 'The dropdown option is not visible'}).toBeVisible();
         await option.click();
     }
 
@@ -226,7 +226,7 @@ export class HomePage extends BasePage{
 
         //Validate status name
         const studentName = this.successModal.locator('tr:nth-of-type(1) > td:nth-of-type(2)');
-        await expect(studentName).toHaveText(formData.firstName + ' ' + formData.lastName);
+        await expect(studentName, { message: 'The student name is not as expected'}).toHaveText(formData.firstName + ' ' + formData.lastName);
 
         //Validate the student email
         const studentEmail = this.successModal.locator('tr:nth-of-type(2) > td:nth-of-type(2)');
@@ -234,11 +234,11 @@ export class HomePage extends BasePage{
 
         //validate the gender
         const gender = this.successModal.locator('tr:nth-of-type(3) > td:nth-of-type(2)');
-        await expect(gender).toHaveText(formData.gender);
+        await expect(gender, { message: 'The gender is not as expected'}).toHaveText(formData.gender);
 
         //Validate phone number
         const phoneNumber = this.successModal.locator('tr:nth-of-type(4) > td:nth-of-type(2)');
-        await expect(phoneNumber).toHaveText(formData.userNumber);
+        await expect(phoneNumber, { message: 'The phone number is not as expected'}).toHaveText(formData.userNumber);
 
         //Validate date of birth
         const dateOfBirth = this.successModal.locator('tr:nth-of-type(5) > td:nth-of-type(2)');
@@ -246,15 +246,15 @@ export class HomePage extends BasePage{
         const day = String(date.getDate()).padStart(2, '0');
         const month = date.toLocaleString('en-US', { month: 'long' });
         const year = date.getFullYear();
-        await expect(dateOfBirth).toHaveText(`${day} ${month},${year}`);
+        await expect(dateOfBirth, { message: 'The date of birth is not as expected'}).toHaveText(`${day} ${month},${year}`);
 
         //Validate subjects
         const subjects = this.successModal.locator('tr:nth-of-type(6) > td:nth-of-type(2)');
-        await expect(subjects).toHaveText(formData.subjects?.join(', '));
+        await expect(subjects, { message: 'The subjects are not as expected'}).toHaveText(formData.subjects?.join(', '));
 
         //Validate the hobbies
         const hobbies = this.successModal.locator('tr:nth-of-type(7) > td:nth-of-type(2)');
-        await expect(hobbies).toHaveText(formData.hobbies?.join(', '));
+        await expect(hobbies, { message: 'The hobbies are not as expected'}).toHaveText(formData.hobbies?.join(', '));
 
         //Validate the picture
         const image = this.successModal.locator('tr:nth-of-type(8) > td:nth-of-type(2)');
@@ -263,7 +263,7 @@ export class HomePage extends BasePage{
         }else {
             const filePath = path.resolve(__dirname, formData.picture);
             const fileName = path.basename(filePath);
-            await expect(image).toHaveText(fileName);
+            await expect(image, { message: 'The uploaded picture is not as expected'}).toHaveText(fileName);
         }
 
         //Validate the address
@@ -273,7 +273,7 @@ export class HomePage extends BasePage{
         //Validate the state and city
         const stateAndCity = this.successModal.locator('tr:nth-of-type(10) > td:nth-of-type(2)');
         const expectedLocation = `${formData.state ?? ''} ${formData.city ?? ''}`.trim();
-        await expect(stateAndCity).toHaveText(expectedLocation);
+        await expect(stateAndCity, { message: 'The state and city are not as expected'}).toHaveText(expectedLocation);
 
         //close modal and expect modal hidden
         await this.closeModalBtn.scrollIntoViewIfNeeded();
