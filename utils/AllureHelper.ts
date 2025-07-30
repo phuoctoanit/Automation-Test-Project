@@ -1,6 +1,16 @@
 import { TestInfo } from '@playwright/test';
 import path from 'path';
 
+type Metadata = {
+    feature?: string;
+    story?: string;
+    severity?: string;
+    owner?: string;
+    tag?: string | string[];
+    issue?: string;
+    description?: string;
+};
+
 export class AllureHelper {
     static getAllureResultsPath(): string {
         return 'allure-results';
@@ -22,19 +32,21 @@ export class AllureHelper {
         return path.join(this.getAllureResultsPath(), 'allure-config.json');
     }
 
-    static addAllureMetadata(testInfo: TestInfo, meta: {
-        feature?: string;
-        story?: string;
-        severity?: string;
-        owner?: string;
-        issue?: string;
-        tag?: string;
-        description?: string;
-    }) {
-        for (const [key, value] of Object.entries(meta)) {
-        if (value) {
-            testInfo.annotations.push({ type: key, description: value });
+    static addAllureMetadata(testInfo: TestInfo, metadata: Metadata): void {
+        const add = (type: string, value?: string | string[]) => {
+        if (!value) return;
+        const values = Array.isArray(value) ? value : [value];
+        for (const v of values) {
+            testInfo.annotations.push({ type, description: v });
         }
-        }
+        };
+
+        add('feature', metadata.feature);
+        add('story', metadata.story);
+        add('severity', metadata.severity);
+        add('owner', metadata.owner);
+        add('tag', metadata.tag);
+        add('issue', metadata.issue);
+        add('description', metadata.description);
     }
 }
