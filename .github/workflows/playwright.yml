@@ -113,7 +113,7 @@ jobs:
       #     allure generate allure-results --clean -o allure-report
       
       - name: Make allure-run.sh executable
-        run: chmod +x ./setups/allure-run.sh
+        run: chmod +x setups/allure-run.sh
 
       - name: Run Allure Script
         run: ./setups/allure-run.sh 
