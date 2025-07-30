@@ -61,7 +61,7 @@ export class AllureHelper {
             }
         }
         if (metadata.issue) {
-            allure.link(`https://jira.example.com/browse/${metadata.issue}`, `Issue ${metadata.issue}`);
+            allure.issue(`https://jira.example.com/browse/${metadata.issue}`, `Issue ${metadata.issue}`);
         }
         if (metadata.description) {
             allure.description(metadata.description);

@@ -177,7 +177,23 @@ jobs:
 
       - name: ♻️ Copy Allure history
         run: |
+          echo "Checking existence of allure-history and merged-results..."
+    
+          if [ -d "allure-history" ]; then
+            echo "✅ Directory 'allure-history' exists."
+          else
+            echo "❌ Directory 'allure-history' does NOT exist."
+          fi
+
+          if [ -d "merged-results" ]; then
+            echo "✅ Directory 'merged-results' exists."
+          else
+            echo "❌ Directory 'merged-results' does NOT exist."
+          fi
+
           if [ -d "allure-history" ] && [ -d "merged-results" ]; then
+            echo "📂 Copying history into merged-results..."
+            mkdir -p merged-results/history
             cp -r allure-history/* merged-results/history
           else
             echo "No previous allure-history found. Skipping history copy."  
@@ -189,7 +205,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           rm -rf allure-report
-          allure generate ./merged-results -o allure-report
+          allure generate ./merged-results -o allure-report --clean
 
       # - name: 📦 Upload Allure Report Artifact
       #   uses: actions/upload-artifact@v4
