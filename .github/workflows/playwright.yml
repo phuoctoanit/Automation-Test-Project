@@ -99,11 +99,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Download Allure Results Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
 
       - name: Download Allure History
         uses: actions/download-artifact@v4
@@ -138,6 +133,12 @@ jobs:
         with:
           name: allure-history
           path: allure-report/history
+
+      - name: ⬇️ Download Allure Results Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results    
 
       - name: 📤 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
