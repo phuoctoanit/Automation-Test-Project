@@ -145,6 +145,12 @@ jobs:
           path: allure-history
         continue-on-error: true
 
+      - name: ⬇️ Download Allure Results Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: merged-results
+          path: merged-results  
+
       - name: ♻️ Copy Allure history
         run: |
           if [ -d "allure-history" ] && [ -d "merged-results" ]; then
@@ -157,7 +163,7 @@ jobs:
       - name: Generate Allure Report
         run: |
           rm -rf allure-report
-          npx allure generate merged-results -o allure-report
+          npx allure generate ./merged-results -o allure-report
 
       - name: 📦 Upload Allure Report Artifact
         uses: actions/upload-artifact@v4
@@ -171,12 +177,6 @@ jobs:
         with:
           name: allure-history
           path: allure-report/history
-
-      - name: ⬇️ Download Allure Results Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: merged-results
-          path: merged-results
 
       - name: 📤 Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
