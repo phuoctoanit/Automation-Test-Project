@@ -1,0 +1,1 @@
+{"type":"metadata","data":{"links":[{"url":"Issue JIRA-1236","type":"https://jira.example.com/browse/JIRA-1236"}]}}
