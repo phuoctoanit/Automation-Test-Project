@@ -99,19 +99,25 @@ jobs:
 
       - name: ▶️ Run Playwright tests on UI
         run: |
-          echo "Running UI tests on browser: ${{ matrix.browser }} and environment: ${{ env.env }}"
+          echo "Running UI tests on browser: ${{ matrix.browser }} and environment: ${{ env.env }} on shard: ${{ matrix.shard }}"
           if [ -z "${{ env.env }}" ]; then
             echo "Environment variable 'env' is not set. Defaulting to 'dev'."
             export env=dev
           fi
           ENV=${{ env.env }} npx playwright test tests/form --project=${{ matrix.browser }} --shard=${{ matrix.shard }} || true
           echo "Playwright tests completed."
+      
+      - name: 🔧 Prepare shard name
+        run: |
+          SAFE_SHARD="${{ matrix.shard }}"
+          SAFE_SHARD="${SAFE_SHARD//\//-}"
+          echo "SAFE_SHARD=$SAFE_SHARD" >> $GITHUB_ENV    
 
       - name: 📤 Upload Allure results
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: allure-results-${{ matrix.browser }}-${{ matrix.shard }}
+          name: allure-results-${{ matrix.browser }}-${{ env.SAFE_SHARD }}
           path: allure-results
           if-no-files-found: warn
 
