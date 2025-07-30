@@ -1,2 +1,0 @@
-[Worker 11] Starting a new test case TC 07: Validate warning message if User Number is invalid
-[Worker 11] Completed: TC 07: Validate warning message if User Number is invalid with status: PASSED
