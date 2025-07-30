@@ -116,10 +116,8 @@ jobs:
         continue-on-error: true
 
       - name: ♻️ Copy Allure history
-        run: |
-          if [ -d "allure-report/history" ]; then
-            cp -r allure-report/history allure-results/ || true
-          fi
+        run: 
+          cp -r allure-report/history allure-results/ || true
 
       - name: ⬇️ Download Allure Results Artifact
         uses: actions/download-artifact@v4
