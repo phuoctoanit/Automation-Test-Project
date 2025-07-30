@@ -80,6 +80,7 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]
+        shard: [1/2, 2/2]
 
     steps:
       - name: ⬇️ Checkout code
@@ -103,7 +104,7 @@ jobs:
             echo "Environment variable 'env' is not set. Defaulting to 'dev'."
             export env=dev
           fi
-          ENV=${{ env.env }} npx playwright test tests/form --project=${{ matrix.browser }} || true
+          ENV=${{ env.env }} npx playwright test tests/form --project=${{ matrix.browser }} --shard=${{ matrix.shard }} || true
           echo "Playwright tests completed."
 
       - name: 📤 Upload Allure results
@@ -163,33 +164,33 @@ jobs:
 
     steps:
 
-      - name: Create dummy history
-        run: |
-          mkdir -p allure-report/history
-          echo "test" > allure-report/history/history.txt
+      # - name: Create dummy history
+      #   run: |
+      #     mkdir -p allure-report/history
+      #     echo "test" > allure-report/history/history.txt
 
-      - name: Upload Allure History
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-history
-          path: allure-report/history
-
-      - name: Download Allure History
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-history
-          path: allure-history
-        continue-on-error: true  
-
-      - name: List files
-        run: ls -R allure-history
+      # - name: Upload Allure History
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: allure-history
+      #     path: allure-report/history
 
       # - name: Download Allure History
       #   uses: actions/download-artifact@v4
       #   with:
       #     name: allure-history
       #     path: allure-history
-      #   continue-on-error: true
+      #   continue-on-error: true  
+
+      # - name: List files
+      #   run: ls -R allure-history
+
+      - name: Download Allure History
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-history
+          path: allure-history
+        continue-on-error: true
 
       - name: ⬇️ Download Allure Results Artifact
         uses: actions/download-artifact@v4
