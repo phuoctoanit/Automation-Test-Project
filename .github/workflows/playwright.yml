@@ -127,33 +127,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: ⬇️ Download Chromium Allure Results
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: allure-results-chromium
-      #     path: ./merged-results
-      #   continue-on-error: true
-
-      # - name: ⬇️ Download Firefox Allure Results
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: allure-results-firefox
-      #     path: ./merged-results
-      #   continue-on-error: true    
-
-      # - name: ⬇️ Download Webkit Allure Results
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: allure-results-webkit
-      #     path: ./merged-results
-      #   continue-on-error: true
-        
-      # - name: ⬇️ Download API Allure Results
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: allure-results-api
-      #     path: ./merged-results
-      #   continue-on-error: true
       - name: ⬇️ Download all allure artifacts
         uses: actions/download-artifact@v4
         with:
@@ -241,7 +214,7 @@ jobs:
           
       - name: 📊 Install Allure CLI
         run: npm install -g allure-commandline
-
+      
       - name: Generate Allure Report
         run: |
           rm -rf allure-report

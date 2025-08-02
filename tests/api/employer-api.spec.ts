@@ -1,8 +1,8 @@
+import { Server } from "http";
 import { login } from "../../mock-apis/src/auth/login";
 import { AllureHelper } from "../../utils/AllureHelper";
 import { test, expect } from "./fixtures/api.fixtures";
-
-
+import { Severity } from "../../constants/Severity";
 
 test.describe("Employer API Tests", () => {
 
@@ -22,7 +22,7 @@ test.describe("Employer API Tests", () => {
         AllureHelper.addAllureMetadata(testInfo, {
             feature: 'API Testing',
             story: 'API - Employer Management',
-            severity: 'critical',
+            severity: Severity.Critical,
             owner: 'toan.nguyen',
             tag: 'smoke',
             issue: 'JIRA-1234',
@@ -39,7 +39,7 @@ test.describe("Employer API Tests", () => {
         AllureHelper.addAllureMetadata(testInfo, {
             feature: 'API Testing',
             story: 'API - Employer Management',
-            severity: 'critical',
+            severity: Severity.Critical,
             owner: 'toan.nguyen',
             tag: 'smoke',
             issue: 'JIRA-1235',
@@ -57,7 +57,7 @@ test.describe("Employer API Tests", () => {
         AllureHelper.addAllureMetadata(testInfo, {
             feature: 'API Testing',
             story: 'API - Employer Management',
-            severity: 'critical',
+            severity: Severity.Critical,
             owner: 'toan.nguyen',
             tag: 'smoke',
             issue: 'JIRA-1236',
@@ -74,7 +74,7 @@ test.describe("Employer API Tests", () => {
         AllureHelper.addAllureMetadata(testInfo, {
             feature: 'API Testing',
             story: 'API - Employer Management',
-            severity: 'critical',
+            severity: Severity.Critical,
             owner: 'toan.nguyen',
             tag: 'smoke',
             issue: 'JIRA-1234',
@@ -88,7 +88,7 @@ test.describe("Employer API Tests", () => {
         AllureHelper.addAllureMetadata(testInfo, {
             feature: 'API Testing',
             story: 'API - Employer Management',
-            severity: 'critical',
+            severity: Severity.Critical,
             owner: 'toan.nguyen',
             tag: 'smoke',
             issue: 'JIRA-1234',

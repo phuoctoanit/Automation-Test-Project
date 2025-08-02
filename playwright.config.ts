@@ -14,6 +14,7 @@ export default defineConfig({
   testDir: './tests',
   timeout: 30 * 1000,
   retries: process.env.CI ? 1 : 0,
+  fullyParallel: true,
   use: {
     headless: true,
     screenshot: 'only-on-failure', //only-on-failure
@@ -33,7 +34,6 @@ export default defineConfig({
     {
       name: 'api',
       testMatch: /tests\/api\/.*\.spec\.ts/,
-      fullyParallel: true,
       use: {
         baseURL: process.env.API_URL || 'http://localhost:3001',
         extraHTTPHeaders: {
@@ -50,22 +50,19 @@ export default defineConfig({
       name: 'chromium',
       use: {
         viewport: { width: 1280, height: 720 }
-      },
-      fullyParallel: true,
+      }
     },
     {
       name: 'firefox',
       use: {
         viewport: { width: 1280, height: 720 }
-      },
-      fullyParallel: true,
+      }
     },
     {
       name: 'webkit',
       use: {
         viewport: { width: 1280, height: 720 }
-      },
-      fullyParallel: true,
+      }
     }
   ],
 });
